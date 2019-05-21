@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
-
-const client = new Discord.Client();
+const client = new Discord.Client({commandPrefix = ">";});
 
  
 
@@ -24,6 +23,5 @@ client.on('message', message => {
 
  
 
-// THIS  MUST  BE  THIS  WAY
-
+// Bot token hidden in external variable
 client.login(process.env.BOT_TOKEN);
