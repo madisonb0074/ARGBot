@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({commandPrefix = ">";});
+const client = new Discord.Client();
 
- 
+bot.commandPrefix = ">";
 
 client.on('ready', () => {
 
