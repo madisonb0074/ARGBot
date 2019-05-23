@@ -9,9 +9,15 @@ client.on('ready', () => {
 
 });
 
+
+
  
 //'check for this on new message'
 client.on('message', message => {
+    
+    client.on("guildCreate", guild => {
+    message.channel.send("ARGBot has joined " + guild.name);
+    })
     
 //Ignoring all messages BELOW if not starting with prefix
 if (!message.content.startsWith(config.prefix) || message.author.bot) return;
