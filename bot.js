@@ -13,7 +13,7 @@ client.on('ready', () => {
     game: {name: "use a!help"}
     });
     
-    var channel = client.channels.get('580422986230792203');
+    var channel = client.channels.get('581154704785014784');
     channel.sendMessage("I am online.");
     
 
