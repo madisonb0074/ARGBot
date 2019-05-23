@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+//separate configuration file with prefix
+const config = require("./config.json");
 
 client.on('ready', () => {
 
@@ -12,10 +14,10 @@ client.on('ready', () => {
 client.on('message', message => {
     
 //Ignoring all messages BELOW if not starting with prefix
-if (!message.content.startsWith(prefix) || message.author.bot) return;
+if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
 //ignores case and makes sure message can be read
-const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
+const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 const command = args.shift().toLowerCase();
 
     //check if bot is working properly function
