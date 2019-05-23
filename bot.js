@@ -13,10 +13,14 @@ client.on('ready', () => {
 client.on('message', message => {
     
 //Ignoring messages if not starting with prefix
-if (!message.content.startsWith('>') || message.author.bot) return;
+if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+
+//ignores case and makes sure message can be read
+const args = message.content.slice(PREFIX.length).trim().split(/ +/g);
+const command = args.shift().toLowerCase();
 
     //check if bot is working properly function
-    if (message.content === 'ping') {
+    if (command === 'ping') {
 
        message.reply('pong');
 
