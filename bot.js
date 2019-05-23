@@ -6,39 +6,18 @@ const config = require("./config.json");
 client.on('ready', () => {
 
     console.log('I am ready!');
+    
+    //Sets bot appearance and game playing in menu
+    client.user.setPresence({
+    status: 'online',
+    game: {name: "use a!help"}
+    });
+    
+    var channel = client.channels.get('580422986230792203');
+    channel.sendMessage("I am online.");
+    
 
 });
-
-
-let defaultChannel = "";
-guild.channels.forEach((channel) => {
-  if(channel.type == "text" && defaultChannel == "") {
-    if(channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
-      defaultChannel = channel;
-    }
-  }
-})
-
-defaultChannel.send(`Hello. I am the Accurate Realization Gadget. Here are my current commands.`, {
-embed:{
-    title: 'Help menu.',
-    color: 10826248, 
-    description: "The prefix for all my commands is \'a!\', e.g: \'a!help\'.",
-    fields:[
-        {
-            name: 'Fun',
-            value: 'Nothing yet.'
-        },     
-        {
-            name: 'Utilities',
-            value: 'help, ping'
-        }
-    ],
-
-    footer: {
-        text: 'ARGBot created and developed by radcircles'
-    }
-}
 
  
 //'check for this on new message'
@@ -53,10 +32,13 @@ const command = args.shift().toLowerCase();
 
     //check if bot is working properly function
     if (command === 'ping') {
-
        message.reply('pong');
-
-       }
+     }
+    
+    //outlines everything bot can do
+    if (command === 'help') {
+        
+    }
 
 });
 
