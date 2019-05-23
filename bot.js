@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-char prefix = ">";
 
 client.on('ready', () => {
 
@@ -10,7 +9,7 @@ client.on('ready', () => {
 });
 
 //Ignoring messages if not starting with prefix
-if (!message.content.startsWith(prefix) || message.author.bot) return; 
+if (!message.content.startsWith('>') || message.author.bot) return; 
 
 client.on('message', message => {
 
