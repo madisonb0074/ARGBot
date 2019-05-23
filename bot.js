@@ -41,7 +41,7 @@ const command = args.shift().toLowerCase();
     }
 
 
- 
+ ))}
 
 // Bot token hidden in external variable
 client.login(process.env.BOT_TOKEN);
