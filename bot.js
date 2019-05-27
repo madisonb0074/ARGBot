@@ -52,7 +52,7 @@ client.on('message', message => {
                 },
                     {
                         name: "Utilities:",
-                        value: "` help ` ` ping `"
+                        value: "` help `   ` ping `"
                     },
                 ],
                 timestamp: new Date(),
