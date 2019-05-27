@@ -34,25 +34,6 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
-client.on('ready', () => {
-    //notification for the CONSOLE when the bot starts up
-    console.log('I am ready!');
-
-    //Sets bot appearance and game playing on Discord
-    client.user.setPresence({
-        status: 'online',
-        game: {name: "use a!help"}
-    });
-    //notification for bot TEST SERVER when bot starts up
-    var channel = client.channels.get('581154704785014784');
-    channel.sendMessage("I am online.");
-
-
-});
-
-
-
-
 
 
 // Bot token hidden in external variable
