@@ -1,18 +1,49 @@
 const Discord = require('discord.js');
+const Enmap = require("enmap");
+const fs = require("fs");
 const client = new Discord.Client();
+
 //separate configuration file with prefix
 const config = require("./config.json");
 
-client.on('ready', () => {
+//making the config file useable anywhere and with all commands
+client.config = config;
 
+//code used to separate commands into new files/allow commands to be edited without resetting the bot
+fs.readdir("./events/", (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+        //loading event files separate from main
+        const event = require(`./events/${file}`);
+        let eventName = file.split(".")[0];
+        client.on(eventName, event.bind(null, client));
+    });
+});
+
+client.commands = new Enmap();
+
+fs.readdir("./commands/", (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+        // if the file is not a JS file, ignore it
+        if (!file.endsWith(".js")) return;
+        let props = require(`./commands/${file}`);
+        let commandName = file.split(".")[0];
+        console.log(`Attempting to load command ${commandName}`);
+        client.commands.set(commandName, props);
+    });
+});
+
+client.on('ready', () => {
+    //notification for the CONSOLE when the bot starts up
     console.log('I am ready!');
 
-    //Sets bot appearance and game playing in menu
+    //Sets bot appearance and game playing on Discord
     client.user.setPresence({
         status: 'online',
         game: {name: "use a!help"}
     });
-
+    //notification for bot TEST SERVER when bot starts up
     var channel = client.channels.get('581154704785014784');
     channel.sendMessage("I am online.");
 
@@ -20,54 +51,8 @@ client.on('ready', () => {
 });
 
 
-//'check for this on new message'
-client.on('message', message => {
-
-//Ignoring all messages BELOW if not starting with prefix
-    if (!message.content.startsWith(config.prefix) || message.author.bot) return;
-
-//ignores case and makes sure message can be read
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
-
-    //check if bot is working properly function
-    if (command === 'ping') {
-        message.reply('pong');
-    }
-
-    //outlines everything bot can do
-    if (command === 'help') {
-        message.channel.send({
-            embed: {
-                color: 10826248,
-                author: {
-                    name: "Accurate Realization Gadget",
-                    icon_url: client.user.avatarURL
-                },
-                title: "Type \a! followed by any of these commands to use them.",
-                description: "The Accurate Realization Gadget is a tool used for utility and fun.",
-                fields: [{
-                    name: "Fun:",
-                    value: "` Nothing here yet. `"
-                },
-                    {
-                        name: "Utilities:",
-                        value: "` help `   ` ping `"
-                    },
-                ],
-                timestamp: new Date(),
-                footer: {
-                    icon_url: client.user.avatarURL,
-                }
 
 
-            }
-    }
-)
-}
-
-})
-;
 
 
 // Bot token hidden in external variable
