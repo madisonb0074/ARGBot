@@ -1,5 +1,5 @@
 exports.run = (client, message, args) => {
-    message.channel.send(message.channel.send({
+    message.channel.send({
         embed: {
             color: 10826248,
             author: {
@@ -24,5 +24,5 @@ exports.run = (client, message, args) => {
 
 
         }
-    }).catch(console.error))
+    }).catch(console.error);
 };
