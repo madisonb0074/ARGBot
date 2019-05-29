@@ -1,24 +1,26 @@
 const Discord = require("discord.js");
-const Enmap = require("enmap");
-const fs = require("fs");
-
 const client = new Discord.Client();
 const config = require("./config.json");
 
-client.commands = new Discord.Collection();
-
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
-}
+client.on("ready", () => {
+  client.user.setPresence({
+    status: 'online',
+    game: {name: "Use a!help!"}
+  });
+});
 
 client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
+	
+	//ping command, responds pong when user says a!ping
+	if (command === 'ping') {
+
+       	message.reply('pong');
+
+       	}
 
 });
 
