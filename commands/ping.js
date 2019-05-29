@@ -1,5 +1,9 @@
-//response command, ping = filename, thus it recognizes ping as the command and responds.
+//Responds pong when user says ping 
 
-exports.run = (client, message, args) => {
-    message.channel.send("pong!");
+module.exports = {
+	name: 'ping',
+	description: 'Ping!',
+	execute(message, args) {
+		message.channel.send('Pong.');
+	},
 };
