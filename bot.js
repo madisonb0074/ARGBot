@@ -14,7 +14,13 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
+client.on('message', message => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const command = args.shift().toLowerCase();
+
+});
 
 // Bot token hidden in external variable
 client.login(process.env.BOT_TOKEN);
