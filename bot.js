@@ -50,7 +50,7 @@ client.on('messageDelete', async (message) => {
   } else {
     user = message.author.username
   }
-  accuratebotlog.send(`A message was deleted in ${message.channel.name} by ${user}`);
+  accuratebotlog.channel.send(`A message was deleted in ${message.channel.name} by ${user}`);
 })
 
 
