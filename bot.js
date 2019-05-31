@@ -31,7 +31,7 @@ client.on('message', message => {
 	
 	var server = message.guild;
 	//server name is bot username
-	var name = message.author.username;
+	var name = "AccurateBotLog";
 	//creating a channel
 	server.createChannel(name, "text");
 		
