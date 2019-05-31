@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 
+
 client.on("ready", () => {
 	
 var channel = client.channels.get('581154704785014784');
@@ -14,8 +15,8 @@ channel.sendMessage("I am online.");
 });
 
 client.on('message', message => {
+	//if the message sender is a bot, ignore it to prevent feedback loop
 	if (message.author.bot) return;
- 	// This is where we'll put our code.
   	if (message.content.indexOf(config.prefix) !== 0) return;
  
   	const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -26,7 +27,16 @@ client.on('message', message => {
 
        	message.channel.send('pong');
 
-       	}
+       	} else if (command === 'channel'){
+	
+	var server = message.guild;
+	//server name is bot username
+	var name = message.author.username;
+	//creating a channel
+	server.createChannel(name, "text");
+		
+	}
+	
 
 });
 
