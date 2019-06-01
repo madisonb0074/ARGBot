@@ -33,10 +33,12 @@ client.on('message', message => {
 
 //audit log for bot, first sends message when
 client.on('messageDelete', async (message) => {
+  //Creating a log channel within a server if has the permissions
   const logs = message.guild.channels.find(channel => channel.name === "accuratebotlog");
   if (message.guild.me.hasPermission('MANAGE_CHANNELS') && !logs) {
     message.guild.createChannel('accuratebotlog', 'text');
   }
+  //If doesn't have the permissions, complain about it in console console.log();
   if (!message.guild.me.hasPermission('MANAGE_CHANNELS') && !logs) {
     console.log('The logs channel does not exist and tried to create the channel but I am lacking permissions')
   }
@@ -50,7 +52,7 @@ client.on('messageDelete', async (message) => {
   } else {
     user = message.author.username
   }
-  accuratebotlog.sendMessage(`A message was deleted in ${message.channel.name} by ${user}`);
+  const channel = messageDelete.guild.channels.find(ch => ch.name === 'accuratebotlog');channel.send(`The message : "${messageDelete.content}" by ${messageDelete.author} was deleted. There ID is ${messageDelete.author.id}`)});
 })
 
 
