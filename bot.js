@@ -69,18 +69,20 @@ client.on('messageDelete', function (message) {
 })
 
 // sends message when important (externally editable) user statuses change (for example nickname)
+// user in a guild has been updated
 client.on('guildMemberUpdate', function (guild, oldMember, newMember) {
-  // declare options of changes within an array
+  // declare changes
   var Changes = {
     unknown: 0,
     addedRole: 1,
     removedRole: 2,
-    nickname: 3
+    username: 3,
+    nickname: 4,
+    avatar: 5
   }
-  // if user change is not defined, it is an unknown change (these changes are that which the bot SHOULDNT care about b/c it cannot change.)
   var change = Changes.unknown
 
-  // if role is changed, the change is defined as removedRole by finding if the newMember's (the member that is different from before) ID is different from before and therefore null
+  // check if roles were removed
   var removedRole = ''
   oldMember.roles.every(function (value) {
     if (newMember.roles.find('id', value.id) == null) {
@@ -98,31 +100,44 @@ client.on('guildMemberUpdate', function (guild, oldMember, newMember) {
     }
   })
 
-  // check if it was the user nickname that changed
-  if (newMember.nickname !== oldMember.nickname) {
+  // check if username changed
+  if (newMember.user.username != oldMember.user.username) {
+    change = Changes.username
+  }
+  // check if nickname changed
+  if (newMember.nickname != oldMember.nickname) {
     change = Changes.nickname
   }
-
-  // post the changes in the guild's log channel
+  // check if avatar changed
+  if (newMember.user.avatarURL != oldMember.user.avatarURL) {
+    change = Changes.avatar
+  }
+  // post in the guild's log channel
   var log = guild.channels.find('name', CHANNEL)
-  // ignore logging changes completely if log doesn't exist
   if (log != null) {
-    // if the changes above are active then explain them in log
     switch (change) {
       case Changes.unknown:
-        log.sendMessage('**User Update** ' + newMember)
+        log.sendMessage('**[User Update]** ' + newMember)
         break
       case Changes.addedRole:
-        log.sendMessage('**User Role Added** ' + newMember + ' has had the ' + addedRole + ' role added to them.')
+        log.sendMessage('**[User Role Added]** ' + newMember + ': ' + addedRole)
         break
       case Changes.removedRole:
-        log.sendMessage('**User Role Removed** ' + newMember + ' has had the ' + removedRole + ' role removed from them.')
+        log.sendMessage('**[User Role Removed]** ' + newMember + ': ' + removedRole)
+        break
+      case Changes.username:
+        log.sendMessage('**[User Username Changed]** ' + newMember + ': Username changed from ' +
+          oldMember.user.username + '#' + oldMember.user.discriminator + ' to ' +
+          newMember.user.username + '#' + newMember.user.discriminator)
         break
       case Changes.nickname:
-        log.sendMessage('**User Nickname Changed** ' + newMember + ': ' +
+        log.sendMessage('**[User Nickname Changed]** ' + newMember + ': ' +
           (oldMember.nickname != null ? 'Changed nickname from ' + oldMember.nickname +
             +newMember.nickname : 'Set nickname') + ' to ' +
           (newMember.nickname != null ? newMember.nickname + '.' : 'original username.'))
+        break
+      case Changes.avatar:
+        log.sendMessage('**[User Avatar Changed]** ' + newMember)
         break
     }
   }
