@@ -63,7 +63,7 @@ client.on('messageDelete', function (message) {
     // post in the server's log channel, by finding the accuratebotlog channel (SERVER ADMINS **MUST** CREATE THIS CHANNEL ON THEIR OWN, IF THEY WANT A LOG)
     var log = message.guild.channels.find('name', CHANNEL)
     if (log != null) {
-      log.sendMessage('**Message Deleted** ' + message.author + '\'s message: ' + message.cleanContent + ' has been deleted.')
+      log.sendMessage('**Message Deleted** ' + message.author.displayName + '\'s message: ' + message.cleanContent + ' has been deleted.')
     }
   }
 })
@@ -116,7 +116,7 @@ client.on('guildMemberUpdate', function (guild, oldMember, newMember) {
         log.sendMessage('**User Role Added** ' + newMember + ' has had the ' + addedRole + ' role added to them.')
         break
       case Changes.removedRole:
-        log.sendMessage('**User Role Removed** ' + newMember + ' has had the ' + removedRole + ' role removed from them.')
+        log.sendMessage('**User Role Removed** ' + newMember.displayName + ' has had the ' + removedRole + ' role removed from them.')
         break
       case Changes.nickname:
         log.sendMessage('**User Nickname Changed** ' + newMember + ': ' +
