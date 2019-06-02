@@ -4,6 +4,8 @@ const client = new Discord.Client()
 const config = require('./config.json')
 const CHANNEL = 'accuratebotlog'
 
+// **SIMPLE EVENT HANDLERS**
+
 // Sends message upon server join, outlining very important info such as how to see bot log
 client.on('guildCreate', guild => {
   let defaultChannel = ''
@@ -19,8 +21,6 @@ client.on('guildCreate', guild => {
   // (this log channel appears mostly innocent and boring as a function, but is a roundabout way for making the bot changes visible to all users, allowing for full transparency of ARGbot's more extensive actions, and acts as a recognition of when things are done by the bot)!
   defaultChannel.send('Hello, I am the Accurate Realization Gadget. Before we start, there are a few important things I need to outline! Since one of my main functions is as an auditlog bot with more detailed info than the original Discord bot log, I *need* a channel made for me called #accuratebotlog if the audit log function is to be used, otherwise this main function is unavailable as I cannot create this channel for myself in all servers. Thank you!')
 })
-
-// EVENT HANDLERS:
 
 // when bot is ready to go, send a message to the test server (NOT all servers)
 client.on('ready', () => {
@@ -48,18 +48,82 @@ client.on('message', message => {
   const command = args.shift().toLowerCase()
 
   // simplest command, responds pong when user says ping w/ prefix
-  if (command === 'ping') {
-    message.channel.send('pong')
+  switch (command) {
+    case 'ping':
+      message.channel.send('Pong!')
+      break
   }
 })
 
-// audit log for bot, first sends message when anything is deleted
+// **AUDIT LOG EVENT HANDLERS**
+
+// sends message when anything is deleted
 client.on('messageDelete', function (message) {
   if (message.channel.type === 'text') {
     // post in the server's log channel, by finding the accuratebotlog channel (SERVER ADMINS **MUST** CREATE THIS CHANNEL ON THEIR OWN, IF THEY WANT A LOG)
     var log = message.guild.channels.find('name', CHANNEL)
     if (log != null) {
       log.sendMessage('**Message Deleted** ' + message.author + '\'s message: ' + message.cleanContent + 'has been deleted.')
+    }
+  }
+})
+
+// sends message when important (externally editable) user statuses change (for example nickname)
+client.on('guildMemberUpdate', function (guild, oldMember, newMember) {
+  // declare options of changes within an array
+  var Changes = {
+    unknown: 0,
+    addedRole: 1,
+    removedRole: 2,
+    nickname: 3
+  }
+  // if user change is not defined, it is an unknown change (these changes are that which the bot SHOULDNT care about b/c it cannot change.)
+  var change = Changes.unknown
+
+  // if role is changed, the change is defined as removedRole by finding if the newMember's (the member that is different from before) ID is different from before and therefore null
+  var removedRole = ''
+  oldMember.roles.every(function (value) {
+    if (newMember.roles.find('id', value.id) == null) {
+      change = Changes.removedRole
+      removedRole = value.name
+    }
+  })
+
+  // check if roles were added
+  var addedRole = ''
+  newMember.roles.every(function (value) {
+    if (oldMember.roles.find('id', value.id) == null) {
+      change = Changes.addedRole
+      addedRole = value.name
+    }
+  })
+
+  // check if it was the user nickname that changed
+  if (newMember.nickname !== oldMember.nickname) {
+    change = Changes.nickname
+  }
+
+  // post the changes in the guild's log channel
+  var log = guild.channels.find('name', CHANNEL)
+  // ignore logging changes completely if log doesn't exist
+  if (log != null) {
+    // if the changes above are active then explain them in log
+    switch (change) {
+      case Changes.unknown:
+        log.sendMessage('**User Update** ' + newMember)
+        break
+      case Changes.addedRole:
+        log.sendMessage('**User Role Added** ' + newMember + ' has had the ' + addedRole + ' role added to them.')
+        break
+      case Changes.removedRole:
+        log.sendMessage('**User Role Removed** ' + newMember + ' has had the ' + removedRole + ' role removed from them.')
+        break
+      case Changes.nickname:
+        log.sendMessage('**User Nickname Changed** ' + newMember + ': ' +
+          (oldMember.nickname != null ? 'Changed nickname from ' + oldMember.nickname +
+            +newMember.nickname : 'Set nickname') + ' to ' +
+          (newMember.nickname != null ? newMember.nickname + '.' : 'original username.'))
+        break
     }
   }
 })
