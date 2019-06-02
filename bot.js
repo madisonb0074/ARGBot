@@ -59,7 +59,7 @@ client.on('messageDelete', function (message) {
     // post in the server's log channel, by finding the accuratebotlog channel (SERVER ADMINS **MUST** CREATE THIS CHANNEL ON THEIR OWN, IF THEY WANT A LOG)
     var log = message.guild.channels.find('name', CHANNEL)
     if (log != null) {
-      log.sendMessage('**[Message Deleted]** ' + message.author + ': ' + message.cleanContent)
+      log.sendMessage('**Message Deleted** ' + message.author + '\'s message: ' + message.cleanContent + 'has been deleted.')
     }
   }
 })
