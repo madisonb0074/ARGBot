@@ -4,7 +4,7 @@ const client = new Discord.Client()
 const config = require('./config.json')
 const CHANNEL = 'accuratebotlog'
 
-// **SIMPLE EVENT HANDLERS**
+// **SIMPLE EVENT HANDLERS*
 
 // Sends message upon server join, outlining very important info such as how to see bot log
 client.on('guildCreate', guild => {
