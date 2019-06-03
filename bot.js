@@ -96,7 +96,8 @@ client.on('messageDelete', function (message) {
 
 // sends message when important (externally editable) user statuses change (for example nickname)
 // user in a guild has been updated
-client.on('guildMemberUpdate', function (guild, oldMember, newMember) {
+client.on('guildMemberUpdate', function (oldMember, newMember) {
+  const guild = newMember.guild
   // declare changes
   var Changes = {
     unknown: 0,
@@ -127,15 +128,15 @@ client.on('guildMemberUpdate', function (guild, oldMember, newMember) {
   })
 
   // check if username changed
-  if (newMember.user.username != oldMember.user.username) {
+  if (newMember.user.username !== oldMember.user.username) {
     change = Changes.username
   }
   // check if nickname changed
-  if (newMember.nickname != oldMember.nickname) {
+  if (newMember.nickname !== oldMember.nickname) {
     change = Changes.nickname
   }
   // check if avatar changed
-  if (newMember.user.avatarURL != oldMember.user.avatarURL) {
+  if (newMember.user.avatarURL !== oldMember.user.avatarURL) {
     change = Changes.avatar
   }
   // post in the guild's log channel
