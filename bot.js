@@ -43,7 +43,7 @@ client.on('message', message => {
   if (message.author.bot) return
   // if message does not have prefix, completely ignore it, effectively only paying attention to commands
   if (message.content.indexOf(config.prefix) !== 0) return
-  // allows code to use if(command === 'whatever') rather than typing out if message.contains etc & allows commands to work if uppercase
+  // allows code to use if(command === 'whatever') rather than typing out if message.contains etc & allows commands to work if uppercase (args is arguments, or number thereof)
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
 
@@ -82,35 +82,37 @@ client.on('message', message => {
       break
       // help command, outlines all the commands along with important information within an embed
     case 'help':
-      message.channel.send({
-        embed: {
-          color: 3447003,
-          author: {
-            name: client.user.username,
-            icon_url: client.user.avatarURL
-          },
-          title: 'Accurate Rationalization Gadget Bot Help',
-          description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
-          fields: [{
-            name: 'Fun commands',
-            value: '` 8ball `, ` ping `'
-          },
-          {
-            name: 'Logging commands',
-            value: '` Currently empty `'
-          },
-          {
-            name: 'Functional commands',
-            value: '` help `'
+      if (args.length > 0) {} else {
+        message.channel.send({
+          embed: {
+            color: 3447003,
+            author: {
+              name: client.user.username,
+              icon_url: client.user.avatarURL
+            },
+            title: 'Accurate Rationalization Gadget Bot Help',
+            description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
+            fields: [{
+              name: 'Fun commands',
+              value: '` 8ball `, ` ping `'
+            },
+            {
+              name: 'Logging commands',
+              value: '` Currently empty `'
+            },
+            {
+              name: 'Functional commands',
+              value: '` help `'
+            }
+            ],
+            timestamp: new Date(),
+            footer: {
+              icon_url: client.user.avatarURL,
+              text: 'ARGBOT'
+            }
           }
-          ],
-          timestamp: new Date(),
-          footer: {
-            icon_url: client.user.avatarURL,
-            text: 'ARGBOT'
-          }
-        }
-      })
+        })
+      }
   }
 })
 
