@@ -2,7 +2,7 @@
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const config = require('./config.json')
-const CHANNEL = 'accuratebotlog'
+const CHANNEL = config.channel
 
 // **SIMPLE EVENT HANDLERS*
 
@@ -107,6 +107,7 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
     nickname: 4,
     avatar: 5
   }
+  // currently, before any changes, it is seen as unknown
   var change = Changes.unknown
 
   // check if roles were removed
@@ -139,8 +140,9 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
   if (newMember.user.avatarURL !== oldMember.user.avatarURL) {
     change = Changes.avatar
   }
-  // post in the guild's log channel
+  // send message in the guild's log channel
   var log = guild.channels.find('name', CHANNEL)
+  // if log exists, send message depending on case
   if (log != null) {
     switch (change) {
       case Changes.unknown:
