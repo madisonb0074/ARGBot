@@ -89,13 +89,12 @@ client.on('messageDelete', function (message) {
     // post in the server's log channel, by finding the accuratebotlog channel (SERVER ADMINS **MUST** CREATE THIS CHANNEL ON THEIR OWN, IF THEY WANT A LOG)
     var log = message.guild.channels.find('name', CHANNEL)
     if (log != null) {
-      log.send('**Message Deleted** ' + message.author + '\'s message: ' + message.cleanContent + ' has been deleted.')
+      log.send('**Message Deleted** ' + message.author.username + '\'s message: ' + message.cleanContent + ' has been deleted.')
     }
   }
 })
 
-// sends message when important (externally editable) user statuses change (for example nickname)
-// user in a guild has been updated
+// event handler that sends message when important (externally editable) user statuses change (for example nickname)
 client.on('guildMemberUpdate', function (oldMember, newMember) {
   const guild = newMember.guild
   // declare changes
@@ -142,7 +141,7 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
   }
   // send message in the guild's log channel
   var log = guild.channels.find('name', CHANNEL)
-  // if log exists, send message depending on case
+  // if log exists, send message depending on the specific case
   if (log != null) {
     switch (change) {
       case Changes.unknown:
