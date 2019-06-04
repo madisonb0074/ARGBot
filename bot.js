@@ -82,20 +82,35 @@ client.on('message', message => {
       break
       // help command, outlines all the commands along with important information within an embed
     case 'help':
-      const helpEmbed = new Discord.RichEmbed()
-        .setColor('#0099ff')
-        .setTitle('AccurateRationalizationGadget Bot Commands')
-        .setAuthor(client.user.avatarURL + 'AccurateRationalizationGadget')
-        .setDescription('These are commands currently available from the AccurateRationalizationGadget.')
-        .addField('Commands:', 'Use a!your_command to use the command.')
-        .addBlankField()
-        .addField('Fun commands', 'Some value here', true)
-        .addField('Logging commands', 'Some value here', true)
-        .addField('Function commands', 'Some value here', true)
-        .setTimestamp()
-        .setFooter(client.user.avatarURL + 'AccurateRationalizationGadget')
-
-      message.channel.send(helpEmbed)
+      message.channel.send({
+        embed: {
+          color: 3447003,
+          author: {
+            name: client.user.username,
+            icon_url: client.user.avatarURL
+          },
+          title: 'Accurate Rationalization Gadget Bot Help',
+          description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
+          fields: [{
+            name: 'Fun commands',
+            value: '` 8ball `, ` ping `'
+          },
+          {
+            name: 'Logging commands',
+            value: '` Currently empty `'
+          },
+          {
+            name: 'Functional commands',
+            value: '` help `'
+          }
+          ],
+          timestamp: new Date(),
+          footer: {
+            icon_url: client.user.avatarURL,
+            text: 'ARGBOT'
+          }
+        }
+      })
   }
 })
 
