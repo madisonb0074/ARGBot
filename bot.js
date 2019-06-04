@@ -52,6 +52,7 @@ client.on('message', message => {
     case 'ping':
       message.channel.send('Pong!')
       break
+      // 8 ball command, sends 8 ball answer when user asks
     case '8ball':
       var eightBallResponses = [
         'It is certain.',
@@ -78,6 +79,23 @@ client.on('message', message => {
       ]
       var randomAnswer = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
       message.channel.send(randomAnswer)
+      break
+      // help command, outlines all the commands along with important information within an embed
+    case 'help':
+      const helpEmbed = new Discord.RichEmbed()
+        .setColor('#0099ff')
+        .setTitle('AccurateRationalizationGadget Bot Commands')
+        .setAuthor(client.user.avatarURL + 'AccurateRationalizationGadget')
+        .setDescription('These are commands currently available from the AccurateRationalizationGadget.')
+        .addField('Commands:', 'Use a!your_command to use the command.')
+        .addBlankField()
+        .addField('Fun commands', 'Some value here', true)
+        .addField('Logging commands', 'Some value here', true)
+        .addField('Function commands', 'Some value here', true)
+        .setTimestamp()
+        .setFooter(client.user.avatarURL + 'AccurateRationalizationGadget')
+
+      message.channel.send(helpEmbed)
   }
 })
 
