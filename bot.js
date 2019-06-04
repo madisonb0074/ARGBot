@@ -26,7 +26,7 @@ client.on('guildCreate', guild => {
 client.on('ready', () => {
   // this number within the client.channels.get is the ARGTEST server bot-log channel ID specifically
   var channel = client.channels.get('581154704785014784')
-  channel.sendMessage('I am online, ready to create chaos.')
+  channel.send('I am online, ready to create chaos.')
 
   // shows that the bot is online, and what command to use in the bot appearance within servers
   client.user.setPresence({
@@ -89,7 +89,7 @@ client.on('messageDelete', function (message) {
     // post in the server's log channel, by finding the accuratebotlog channel (SERVER ADMINS **MUST** CREATE THIS CHANNEL ON THEIR OWN, IF THEY WANT A LOG)
     var log = message.guild.channels.find('name', CHANNEL)
     if (log != null) {
-      log.sendMessage('**Message Deleted** ' + message.author + '\'s message: ' + message.cleanContent + ' has been deleted.')
+      log.send('**Message Deleted** ' + message.author + '\'s message: ' + message.cleanContent + ' has been deleted.')
     }
   }
 })
@@ -144,27 +144,27 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
   if (log != null) {
     switch (change) {
       case Changes.unknown:
-        log.sendMessage('**User Update** ' + newMember.user.username)
+        log.send('**User Update** ' + newMember.user.username)
         break
       case Changes.addedRole:
-        log.sendMessage('**User Role Added** ' + newMember.user.username + ': ' + addedRole)
+        log.send('**User Role Added** ' + newMember.user.username + ': ' + addedRole)
         break
       case Changes.removedRole:
-        log.sendMessage('**User Role Removed** ' + newMember.user.username + ': ' + removedRole)
+        log.send('**User Role Removed** ' + newMember.user.username + ': ' + removedRole)
         break
       case Changes.username:
-        log.sendMessage('**User Username Changed** ' + newMember.user.username + ': Username changed from ' +
+        log.send('**User Username Changed** ' + newMember.user.username + ': Username changed from ' +
           oldMember.user.username + '#' + oldMember.user.discriminator + ' to ' +
           newMember.user.username + '#' + newMember.user.discriminator)
         break
       case Changes.nickname:
-        log.sendMessage('**User Nickname Changed** ' + newMember.user.username + ': ' +
+        log.send('**User Nickname Changed** ' + newMember.user.username + ': ' +
           (oldMember.nickname != null ? 'Changed nickname from ' + oldMember.nickname +
             +newMember.nickname : 'Set nickname') + ' to ' +
           (newMember.nickname != null ? newMember.nickname + '.' : 'original username.'))
         break
       case Changes.avatar:
-        log.sendMessage('**User Avatar Changed** ' + newMember.user.username)
+        log.send('**User Avatar Changed** ' + newMember.user.username)
         break
     }
   }
