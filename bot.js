@@ -74,7 +74,7 @@ client.on('message', message => {
         'My sources say no.',
         'Outlook not so good.',
         'Very doubtful.',
-        'Your Pavlovian gold beast with an electrical bell overlooking opens his mouth as if to speak his mind, then shakes his head.'
+        'Your buzzing gold beast with an electrical Pavlov\'s bell overlooking opens his mouth as if to speak his mind, then shakes his head.'
       ]
       var randomAnswer = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
       message.channel.send(randomAnswer)
@@ -144,27 +144,27 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
   if (log != null) {
     switch (change) {
       case Changes.unknown:
-        log.sendMessage('**[User Update]** ' + newMember.user.username)
+        log.sendMessage('**User Update** ' + newMember.user.username)
         break
       case Changes.addedRole:
-        log.sendMessage('**[User Role Added]** ' + newMember.user.username + ': ' + addedRole)
+        log.sendMessage('**User Role Added** ' + newMember.user.username + ': ' + addedRole)
         break
       case Changes.removedRole:
-        log.sendMessage('**[User Role Removed]** ' + newMember.user.username + ': ' + removedRole)
+        log.sendMessage('**User Role Removed** ' + newMember.user.username + ': ' + removedRole)
         break
       case Changes.username:
-        log.sendMessage('**[User Username Changed]** ' + newMember.user.username + ': Username changed from ' +
+        log.sendMessage('**User Username Changed** ' + newMember.user.username + ': Username changed from ' +
           oldMember.user.username + '#' + oldMember.user.discriminator + ' to ' +
           newMember.user.username + '#' + newMember.user.discriminator)
         break
       case Changes.nickname:
-        log.sendMessage('**[User Nickname Changed]** ' + newMember.user.username + ': ' +
+        log.sendMessage('**User Nickname Changed** ' + newMember.user.username + ': ' +
           (oldMember.nickname != null ? 'Changed nickname from ' + oldMember.nickname +
             +newMember.nickname : 'Set nickname') + ' to ' +
           (newMember.nickname != null ? newMember.nickname + '.' : 'original username.'))
         break
       case Changes.avatar:
-        log.sendMessage('**[User Avatar Changed]** ' + newMember)
+        log.sendMessage('**User Avatar Changed** ' + newMember.user.username)
         break
     }
   }
