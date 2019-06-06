@@ -75,14 +75,22 @@ client.on('message', message => {
         'My sources say no.',
         'Outlook not so good.',
         'Very doubtful.',
-        'Your buzzing gold beast with an electrical Pavlov\'s bell overlooking opens his mouth as if to speak his mind, then shakes his head.'
+        'A buzzing gold beast with an electrical Pavlov\'s bell overlooking opens his mouth as if to speak his mind, then shakes his head.'
       ]
       var randomAnswer = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
       message.channel.send(randomAnswer)
       break
       // help command, outlines all the commands along with important information within an embed
+      // if there are extra args (words within a command) that connect with a command, elaborate on the command
+      // otherwise just send the general help page
     case 'help':
-      if (args.length > 0) {} else {
+    // find arguments that come after the first word
+      if (args.length > 0) {
+        if (args[0] === '8ball') {
+          help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
+        }
+      } else {
+        // main help function occurring if there are no extra arguments
         message.channel.send({
           embed: {
             color: 3447003,
@@ -113,6 +121,24 @@ client.on('message', message => {
           }
         })
       }
+  }
+
+  function help (title, usage, description) {
+    message.channel.send({
+      embed: {
+        color: 15285149,
+        title: 'Command: ' + title,
+        fields: [{
+          name: 'Usage: ',
+          value: usage
+        },
+        {
+          name: 'Description: ',
+          value: description
+        }
+        ]
+      }
+    })
   }
 })
 
