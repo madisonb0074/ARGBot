@@ -19,7 +19,7 @@ client.on('guildCreate', guild => {
   })
   // message sent to the first channel found explaining why we need a log channel
   // (this log channel appears mostly innocent and boring as a function, but is a roundabout way for making the bot changes visible to all users, allowing for full transparency of ARGbot's more extensive actions, and acts as a recognition of when things are done by the bot)!
-  defaultChannel.send('Hello, I am the Accurate Realization Gadget. Before we start, there are a few important things I need to outline! Since one of my main functions is as an auditlog bot with more detailed info than the original Discord bot log, I *need* a channel made for me called #accuratebotlog if the audit log function is to be used, otherwise this main function is unavailable as I cannot create this channel for myself in all servers. Thank you!')
+  defaultChannel.send('Hello, I am the Accurate Realization Gadget. Before we start, there are a few important things I need to outline! Since one of my main functions is as an auditlog bot with more detailed info than the original Discord bot log, I *need* a channel made for me called #accuratebotlog if the audit log function is to be used. This can be done with a!createlog, or you can create the channel on your own! Thank you!')
 })
 
 // when bot is ready to go, send a message to the test server (NOT all servers)
@@ -128,6 +128,10 @@ client.on('message', message => {
           }
         })
       }
+      break
+    // creates a log channel for logging purposes
+    case 'createlog':
+      message.guild.createChannel(CHANNEL, 'text')
       break
   }
 
