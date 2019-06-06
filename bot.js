@@ -128,6 +128,7 @@ client.on('message', message => {
           }
         })
       }
+      break
   }
 
   function help (title, usage, description) {
