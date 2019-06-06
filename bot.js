@@ -93,7 +93,7 @@ client.on('message', message => {
         // main help function occurring if there are no extra arguments
         message.channel.send({
           embed: {
-            color: 6684672,
+            color: 5840151,
             author: {
               name: client.user.username,
               icon_url: client.user.avatarURL
@@ -126,7 +126,7 @@ client.on('message', message => {
   function help (title, usage, description) {
     message.channel.send({
       embed: {
-        color: 6684672,
+        color: 5840151,
         title: 'Command: ' + title,
         fields: [{
           name: 'Usage: ',
