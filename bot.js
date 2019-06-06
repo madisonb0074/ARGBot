@@ -84,10 +84,17 @@ client.on('message', message => {
       // if there are extra args (words within a command) that connect with a command, elaborate on the command
       // otherwise just send the general help page
     case 'help':
-    // find arguments that come after the first word
+    // if the user does a!help `command`, it will give them simple information on the command and its use
+    // help command is simple embed command with replacements in the details
       if (args.length > 0) {
         if (args[0] === '8ball') {
           help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
+        }
+        if (args[0] === 'ping') {
+          help('ping', 'a!ping', 'Responds pong, used to check if bot has perished')
+        }
+        if (args[0] === 'help') {
+          help('help', 'a!help (+ optional command)', 'A help command outlining what commands you can use, and the details behind them')
         }
       } else {
         // main help function occurring if there are no extra arguments
@@ -155,7 +162,8 @@ client.on('messageDelete', function (message) {
   }
 })
 
-// event handler that sends message when important (externally editable) user statuses change (for example nickname)
+// event handler that sends message to a log when important (externally editable) user statuses change (for example nickname)
+// citation: discord logger, richard kriesman
 client.on('guildMemberUpdate', function (oldMember, newMember) {
   const guild = newMember.guild
   // declare changes
