@@ -113,7 +113,7 @@ client.on('message', message => {
             },
             {
               name: 'Logging commands',
-              value: '` Currently empty `'
+              value: '` createlog `'
             },
             {
               name: 'Functional commands',
