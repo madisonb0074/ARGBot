@@ -40,11 +40,16 @@ client.on('ready', () => {
 // event fired when message is sent to server, put all commands used with a prefix within if/else here
 // bot first starts doing nasty stuff when a user says 'animal', uncommon enough word to start the chain.
 client.on('message', message => {
+  // initial messing around
+  // if the message sender is a bot, ignore it to prevent feedback loop
+  if (message.author.bot) return
   if (message.content.includes('animal')) {
     message.member.setNickname('PAVLOV')
   }
-  // if the message sender is a bot, ignore it to prevent feedback loop
-  if (message.author.bot) return
+  if (message.content.toLowerCase.includes('pavlov')) {
+    message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Tell me what I am.')
+  }
+  // ***EVERYTHING NEEDING PREFIX GOES BELOW!***
   // if message does not have prefix, completely ignore it, effectively only paying attention to commands
   if (message.content.indexOf(config.prefix) !== 0) return
   // allows code to use if(command === 'whatever') rather than typing out if message.contains etc & allows commands to work if uppercase (args is arguments, or number thereof)
