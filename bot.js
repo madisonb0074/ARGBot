@@ -46,8 +46,10 @@ client.on('message', message => {
   if (message.content.includes('animal')) {
     message.member.setNickname('PAVLOV')
   }
-  if (message.content.includes('pavlov')) {
-    message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Tell me what I am.')
+  if (message.content.includes.toLowerCase('pavlov')) {
+    message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ping me, tell me what I am.')
+  }
+  if (message.content.includes('@Accurate Rationalization Gadget#8889 You are a computer')) {
   }
   // ***EVERYTHING NEEDING PREFIX GOES BELOW!***
   // if message does not have prefix, completely ignore it, effectively only paying attention to commands
