@@ -96,6 +96,9 @@ client.on('message', message => {
         if (args[0] === 'help') {
           help('help', 'a!help (+ optional command)', 'A help command outlining what commands you can use, and the details behind them')
         }
+        if (args[0] === 'createlog') {
+          help('createlog', 'a!createlog', 'A logging command that outlines commands used, and the details behind them.')
+        }
       } else {
         // main help function occurring if there are no extra arguments
         message.channel.send({
