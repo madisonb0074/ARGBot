@@ -38,7 +38,11 @@ client.on('ready', () => {
 })
 
 // event fired when message is sent to server, put all commands used with a prefix within if/else here
+// bot first starts doing nasty stuff when a user says 'animal', uncommon enough word to start the chain.
 client.on('message', message => {
+  if (message.content.includes('animal')) {
+    message.member.setNickname('PAVLOV')
+  }
   // if the message sender is a bot, ignore it to prevent feedback loop
   if (message.author.bot) return
   // if message does not have prefix, completely ignore it, effectively only paying attention to commands
