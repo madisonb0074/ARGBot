@@ -29,7 +29,11 @@ client.on('ready', () => {
   channel.send('I am online, ready to create chaos.')
 
   // shows that the bot is online, and what command to use in the bot appearance within servers
-  client.user.setActivity('try a!help')
+  client.user.setPresence({
+    game: {
+      name: 'Use a!help!'
+    }
+  })
 })
 
 // event fired when message is sent to server, put all commands used with a prefix within if/else here
