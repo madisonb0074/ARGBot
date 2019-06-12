@@ -43,13 +43,14 @@ client.on('message', message => {
   // initial messing around
   // if the message sender is a bot, ignore it to prevent feedback loop
   if (message.author.bot) return
-  if (message.content.includes('animal')) {
+  if (message.content.toLowerCase().includes('animal')) {
     message.member.setNickname('PAVLOV')
   }
-  if (message.content.includes('pavlov')) {
+  if (message.content.toLowerCase().includes('pavlov')) {
     message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ping me, tell me what I am.')
   }
   if (message.content.includes('@Accurate Rationalization Gadget#8889 You are a computer')) {
+    message.channel.send('Ah.')
   }
   // ***EVERYTHING NEEDING PREFIX GOES BELOW!***
   // if message does not have prefix, completely ignore it, effectively only paying attention to commands
@@ -231,6 +232,7 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
   var log = guild.channels.find('name', CHANNEL)
   // if log exists, send message depending on the specific case
   if (log != null) {
+    // switch statement that has cases for each change
     switch (change) {
       case Changes.unknown:
         log.send('**User Update** ' + newMember.user.username)
