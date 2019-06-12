@@ -29,11 +29,8 @@ client.on('ready', () => {
   channel.send('I am online, ready to create chaos.')
 
   // shows that the bot is online, and what command to use in the bot appearance within servers
-  client.user.setPresence({
-    status: 'online',
-    game: {
-      name: 'Use a!help!'
-    }
+  client.user.setActivity('try a!help', {
+    type: 'WATCHING'
   })
 })
 
@@ -49,7 +46,7 @@ client.on('message', message => {
   if (message.content.toLowerCase().includes('pavlov')) {
     message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ping me, tell me what I am.')
   }
-  if (message.content.includes('@Accurate Rationalization Gadget#8889 You are a computer')) {
+  if (message.content.toLowerCase().includes('@Accurate Rationalization Gadget#8889 you are a computer')) {
     message.channel.send('Ah.')
   }
   // ***EVERYTHING NEEDING PREFIX GOES BELOW!***
