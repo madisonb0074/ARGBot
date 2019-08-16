@@ -44,7 +44,10 @@ client.on('message', message => {
   // if the message sender is a bot, ignore it to prevent feedback loop
   if (message.author.bot) return
   if (message.content.toLowerCase().includes('animal')) {
-    message.member.setNickname('PAVLOV')
+    // if there is another user named pavlov, do not rename
+    if (message.guild.members.nickname.includes('PAVLOV')) {
+      message.member.setNickname('PAVLOV')
+    }
   }
   if (message.content.toLowerCase().includes('pavlov')) {
     message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ping me, tell me what I am.')
