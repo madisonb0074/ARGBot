@@ -58,6 +58,12 @@ client.on('message', message => {
   // ***EVERYTHING NEEDING PREFIX GOES BELOW!***
   // if message does not have prefix, completely ignore it, effectively only paying attention to commands
   if (message.content.indexOf(config.prefix) !== 0) return
+  // Checks if username is pavlov, then politely follows command.
+  function checkPavlov () {
+    if (message.member.nickname === 'PAVLOV') {
+      message.channel.send('Thank you for your command.')
+    }
+  }
   // allows code to use if(command === 'whatever') rather than typing out if message.contains etc & allows commands to work if uppercase (args is arguments, or number thereof)
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g)
   const command = args.shift().toLowerCase()
@@ -65,10 +71,12 @@ client.on('message', message => {
   switch (command) {
     // simplest command, responds pong when user says ping w/ prefix
     case 'ping':
+      checkPavlov()
       message.channel.send('Pong!')
       break
       // 8 ball command, sends 8 ball answer when user asks
     case '8ball':
+      checkPavlov()
       var eightBallResponses = [
         'It is certain.',
         'It is decidedly so.',
@@ -99,8 +107,9 @@ client.on('message', message => {
       // if there are extra args (words within a command) that connect with a command, elaborate on the command
       // otherwise just send the general help page
     case 'help':
-    // if the user does a!help `command`, it will give them simple information on the command and its use
-    // help command is simple embed command with replacements in the details
+      checkPavlov()
+      // if the user does a!help `command`, it will give them simple information on the command and its use
+      // help command is simple embed command with replacements in the details
       if (args.length > 0) {
         if (args[0] === '8ball') {
           help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
@@ -149,11 +158,13 @@ client.on('message', message => {
       break
     // creates a log channel for logging purposes
     case 'createlog':
+      checkPavlov()
       message.guild.createChannel(CHANNEL, 'text')
       break
   }
 
   function help (title, usage, description) {
+    checkPavlov()
     message.channel.send({
       embed: {
         color: 5840151,
