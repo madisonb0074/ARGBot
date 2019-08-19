@@ -42,9 +42,7 @@ client.on('message', message => {
     // if there is another user named pavlov, do not rename
     // set botname to pavlovs dog by finding bot ID and changing the nickname
     message.guild.members.get(client.user.id).setNickname('PAVLOV\'S DOG')
-    if (message.guild.members.nickname.includes('PAVLOV')) {
-      message.member.setNickname('PAVLOV')
-    }
+    message.member.setNickname('PAVLOV')
   }
   if (message.content.toLowerCase().includes('pavlov')) {
     message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ping me, tell me what I am.')
