@@ -29,12 +29,7 @@ client.on('ready', () => {
   channel.send('I am online, ready to create chaos.')
 
   // shows that the bot is online, and what command to use in the bot appearance within servers
-  client.user.setPresence({
-    status: 'online',
-    game: {
-      name: 'Use a!help!'
-    }
-  })
+  client.user.setActivity('use a!help')
 })
 
 // event fired when message is sent to server, put all commands used with a prefix within if/else here
@@ -45,6 +40,8 @@ client.on('message', message => {
   if (message.author.bot) return
   if (message.content.toLowerCase().includes('animal')) {
     // if there is another user named pavlov, do not rename
+    // set botname to pavlovs dog
+    client.user.setNickname('PAVLOV\'S DOG')
     if (message.guild.members.nickname.includes('PAVLOV')) {
       message.member.setNickname('PAVLOV')
     }
