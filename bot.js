@@ -184,16 +184,12 @@ client.on('message', message => {
       }
     })
   }
-
-  function getRandomNumber (highest) {
-    return Math.floor(Math.random() * Math.floor(highest))
-  }
 })
 
 // **AUDIT LOG EVENT HANDLERS**
 
 // sends message when anything is deleted
-client.on('messageDelete', function (message) {
+client.on('messageDelete', message => {
   if (message.channel.type === 'text') {
     // post in the server's log channel, by finding the accuratebotlog channel (SERVER ADMINS **MUST** CREATE THIS CHANNEL ON THEIR OWN, IF THEY WANT A LOG)
     var log = message.guild.channels.find('name', CHANNEL)
@@ -202,7 +198,27 @@ client.on('messageDelete', function (message) {
     }
   }
 })
+client.on('guildMemberAdd', function (guild, member) {
+  let defaultChannel = ''
+  // checks each channel in the server and finds the first one it can send messages in text to
+  guild.channels.forEach((channel) => {
+    if (channel.type === 'text' && defaultChannel === '') {
+      if (channel.permissionsFor(guild.me).has('SEND_MESSAGES')) {
+        defaultChannel = channel
+      }
+    }
+  })
+  // welcoming new users
+  var chanceOfGlitch = getRandomNumber(12)
 
+  var guildname = guild.name
+  if (chanceOfGlitch === 4) {
+    defaultChannel.send('/tts ***LOCKDOWN LOCKDOWN LOCKDOWN***')
+    defaultChannel.send('/tts Unauthorized user detected.')
+  } else {
+    defaultChannel.send('Welcome, ' + member.username + ' to ' + guildname + ', I hope you have a great time here!')
+  }
+})
 // event handler that sends message to a log when important (externally editable) user statuses change (for example nickname)
 // citation: discord logger, richard kriesman
 client.on('guildMemberUpdate', function (oldMember, newMember) {
@@ -281,6 +297,9 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
     }
   }
 })
-
+// gets random number for if there is a function that changes every so often
+function getRandomNumber (highest) {
+  return Math.floor(Math.random() * Math.floor(highest))
+}
 // Bot login token hidden in external variable within heroku. DO NOT PUT IN THIS FILE EVER!!!!!!!!!
 client.login(process.env.BOT_TOKEN)
