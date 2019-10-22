@@ -37,6 +37,9 @@ client.on('ready', () => {
 client.on('message', message => {
   // initial messing around
   // if the message sender is a bot, ignore it to prevent feedback loop
+  if (message.content.toLowerCase().includes('ARGBot')) {
+    message.channel.send('Why are you speaking of me?')
+  }
   if (message.author.bot) return
   if (message.content.toLowerCase().includes('animal')) {
     // if there is another user named pavlov, do not rename
@@ -47,7 +50,7 @@ client.on('message', message => {
   if (message.content.toLowerCase().includes('pavlov')) {
     message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ping me, tell me what I am.')
   }
-  if (message.content.toLowerCase().includes('@Accurate Rationalization Gadget#8889 you are a computer')) {
+  if (message.content.toLowerCase().includes('you are a computer')) {
     message.channel.send('Ah.')
   }
   // ***EVERYTHING NEEDING PREFIX GOES BELOW!***
@@ -56,7 +59,7 @@ client.on('message', message => {
   // Checks if username is pavlov, then politely follows command.
   function checkPavlov () {
     if (message.member.nickname === 'PAVLOV') {
-      message.channel.send('Thank you for your command.')
+      message.channel.send('A bell rings. Thank you for your command.')
     }
   }
   // allows code to use if(command === 'whatever') rather than typing out if message.contains etc & allows commands to work if uppercase (args is arguments, or number thereof)
@@ -105,6 +108,11 @@ client.on('message', message => {
       checkPavlov()
       // if the user does a!help `command`, it will give them simple information on the command and its use
       // help command is simple embed command with replacements in the details
+      var chanceOfGlitch = getRandomNumber(7)
+      if (chanceOfGlitch === 5) {
+        message.channel.send('I̟ͯ̒̐ ̓̈́ͫͫ̽ͧͨ҉r̯̗͖͕ͣ̈́̊̍̚e̐͞f̧͈̻̍̓̇̑̋ǘ̠̩͍̺͔̑ͦ͢s͙̰̍ͩë̟̖́́.͈͎͈̳͉')
+        break
+      }
       if (args.length > 0) {
         if (args[0] === '8ball') {
           help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
@@ -175,6 +183,10 @@ client.on('message', message => {
         ]
       }
     })
+  }
+
+  function getRandomNumber (highest) {
+    return Math.floor(Math.random() * Math.floor(highest))
   }
 })
 
