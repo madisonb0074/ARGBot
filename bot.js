@@ -8,6 +8,8 @@ const CHANNEL = config.channel
 
 // Sends message upon server join, outlining very important info such as how to see bot log
 client.on('guildCreate', guild => {
+  var owner = guild.owner
+  owner.send("Hello. You may be aware, but I am a discord bot meant to act as an ARG, therefore there are some server editing actions that I can carry out. These include changing usernames, adding channels, and creating a logging channel within your server. If you are alright with this, you don't need to do anything, however, if this makes you uncomfortable, kick me out immediately.")
   let defaultChannel = ''
   // checks each channel in the server and finds the first one it can send messages in text to
   guild.channels.forEach((channel) => {
@@ -210,7 +212,6 @@ client.on('guildMemberAdd', function (guild, member) {
   })
   // welcoming new users
   var chanceOfGlitch = getRandomNumber(12)
-
   var guildname = guild.name
   if (chanceOfGlitch === 4) {
     defaultChannel.send('/tts ***LOCKDOWN LOCKDOWN LOCKDOWN***')
