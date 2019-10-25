@@ -149,11 +149,11 @@ client.on('message', message => {
             description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
             fields: [{
               name: 'Fun commands',
-              value: "'" + listElements(funCommands) + "'"
+              value: listElements(funCommands)
             },
             {
               name: 'Functional commands',
-              value: "'" + listElements(functionalCommands) + "'"
+              value: listElements(functionalCommands)
             }
             ],
             timestamp: new Date(),
