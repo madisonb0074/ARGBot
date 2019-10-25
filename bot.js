@@ -75,6 +75,20 @@ client.on('message', message => {
       message.channel.send('Pong!')
       break
       // 8 ball command, sends 8 ball answer when user asks
+    case 'dadjoke':
+      if (message.member.nickname === 'PAVLOV') {
+        message.channel.send('A bell rings. Thanks dad.')
+      }
+      var dadJokes = [
+        // add more dadjokes
+        '',
+        ''
+      ]
+
+      var randomJoke = dadJokes[Math.floor(Math.random() * dadJokes.length)]
+      message.channel.send(randomJoke)
+
+      break
     case '8ball':
       checkPavlov()
       var eightBallResponses = [
@@ -128,7 +142,22 @@ client.on('message', message => {
         if (args[0] === 'createlog') {
           help('createlog', 'a!createlog', 'A logging command that outlines commands used, and the details behind them.')
         }
+        if (args[0] === 'dadjoke') {
+          help('dadjoke', 'a!dadjoke', 'Tells you a dad joke!')
+        }
       } else {
+        var funCommands = [
+          '8ball',
+          'ping',
+          'dadjoke'
+        ]
+
+        var functionalCommands = [
+          'createlog',
+          'help'
+        ]
+
+
         // main help function occurring if there are no extra arguments
         message.channel.send({
           embed: {
@@ -141,7 +170,7 @@ client.on('message', message => {
             description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
             fields: [{
               name: 'Fun commands',
-              value: '` 8ball `, ` ping `'
+              value: '` 8ball `, ` ping `, ` dadjoke `'
             },
             {
               name: 'Logging commands',
@@ -149,7 +178,7 @@ client.on('message', message => {
             },
             {
               name: 'Functional commands',
-              value: '` help `'
+              value: '` help `, `createlog`'
             }
             ],
             timestamp: new Date(),
@@ -301,6 +330,12 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
 // gets random number for if there is a function that changes every so often
 function getRandomNumber (highest) {
   return Math.floor(Math.random() * Math.floor(highest))
+}
+
+function listObjects (array) {
+  for (var i = 0; i < array.length; i++) {
+    return array[i]
+  }
 }
 // Bot login token hidden in external variable within heroku. DO NOT PUT IN THIS FILE EVER!!!!!!!!!
 client.login(process.env.BOT_TOKEN)
