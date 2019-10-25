@@ -157,7 +157,6 @@ client.on('message', message => {
           'help'
         ]
 
-
         // main help function occurring if there are no extra arguments
         message.channel.send({
           embed: {
@@ -170,15 +169,11 @@ client.on('message', message => {
             description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
             fields: [{
               name: 'Fun commands',
-              value: '` 8ball `, ` ping `, ` dadjoke `'
-            },
-            {
-              name: 'Logging commands',
-              value: '` createlog `'
+              value: listObjects(funCommands)
             },
             {
               name: 'Functional commands',
-              value: '` help `, `createlog`'
+              value: listObjects(functionalCommands)
             }
             ],
             timestamp: new Date(),
@@ -333,9 +328,11 @@ function getRandomNumber (highest) {
 }
 
 function listObjects (array) {
+  var text = ''
   for (var i = 0; i < array.length; i++) {
-    return array[i]
+    text += '` ' + array[i] + ' `'
   }
+  return text
 }
 // Bot login token hidden in external variable within heroku. DO NOT PUT IN THIS FILE EVER!!!!!!!!!
 client.login(process.env.BOT_TOKEN)
