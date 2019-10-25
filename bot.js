@@ -92,7 +92,7 @@ client.on('message', message => {
       break
     case '8ball':
       checkPavlov()
-      var rawText = fs.readFileSync('./8ballanswers.txt')
+      var rawText = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
       var eightBallResponses = rawText.split('\n')
       var randomAnswer = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
       message.channel.send(randomAnswer)
