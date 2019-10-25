@@ -3,6 +3,7 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const config = require('./config.json')
 const CHANNEL = config.channel
+var fs = require('fs')
 
 // **SIMPLE EVENT HANDLERS*
 
@@ -91,29 +92,8 @@ client.on('message', message => {
       break
     case '8ball':
       checkPavlov()
-      var eightBallResponses = [
-        'It is certain.',
-        'It is decidedly so.',
-        'Without a doubt.',
-        'Yes - definitely.',
-        'You may rely on it.',
-        'As I see it, yes.',
-        'Most likely.',
-        'Outlook good.',
-        'Yes.',
-        'Signs point to yes.',
-        'Reply hazy, try again.',
-        'Ask again later.',
-        'Better not tell you now.',
-        'Cannot predict now.',
-        'Concentrate and ask again.',
-        'Don\'t count on it.',
-        'My reply is no.',
-        'My sources say no.',
-        'Outlook not so good.',
-        'Very doubtful.',
-        'A buzzing gold beast with an electrical Pavlov\'s bell overlooking opens his mouth as if to speak his mind, then shakes his head.'
-      ]
+      var rawText = fs.readFileSync('./8ballanswers.txt')
+      var eightBallResponses = rawText.split('\n')
       var randomAnswer = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
       message.channel.send(randomAnswer)
       break
@@ -169,11 +149,11 @@ client.on('message', message => {
             description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
             fields: [{
               name: 'Fun commands',
-              value: listObjects(funCommands)
+              value: "'" + listElements(funCommands) + "'"
             },
             {
               name: 'Functional commands',
-              value: listObjects(functionalCommands)
+              value: "'" + listElements(functionalCommands) + "'"
             }
             ],
             timestamp: new Date(),
@@ -326,11 +306,11 @@ client.on('guildMemberUpdate', function (oldMember, newMember) {
 function getRandomNumber (highest) {
   return Math.floor(Math.random() * Math.floor(highest))
 }
-
-function listObjects (array) {
+// lists every element in an array
+function listElements (array) {
   var text = ''
   for (var i = 0; i < array.length; i++) {
-    text += '` ' + array[i] + ' `'
+    text += '  ' + array[i] + '  '
   }
   return text
 }
