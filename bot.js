@@ -310,7 +310,7 @@ function getRandomNumber (highest) {
 function listElements (array) {
   var text = ''
   for (var i = 0; i < array.length; i++) {
-    text += '  ' + array[i] + '  '
+    text += '    ' + array[i] + '    '
   }
   return text
 }
