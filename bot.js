@@ -5,6 +5,7 @@ const config = require('./config.json')
 const CHANNEL = config.channel
 var fs = require('fs')
 
+var embedColour = 0xad1212
 // **SIMPLE EVENT HANDLERS*
 
 // Sends message upon server join, outlining very important info such as how to see bot log
@@ -120,6 +121,9 @@ client.on('message', message => {
         if (args[0] === 'dadjoke') {
           help('dadjoke', 'a!dadjoke', 'Tells you a dad joke!')
         }
+        if (args[0] === 'hug') {
+          help('hug', 'a!hug @userTargeted', 'Sends a hug gif to the person you ping!')
+        }
       } else {
         var funCommands = [
           '8ball',
@@ -135,7 +139,7 @@ client.on('message', message => {
         // main help function occurring if there are no extra arguments
         message.channel.send({
           embed: {
-            color: 5840151,
+            color: embedColour,
             author: {
               name: client.user.username,
               icon_url: client.user.avatarURL
@@ -165,13 +169,54 @@ client.on('message', message => {
       checkPavlov()
       message.guild.createChannel(CHANNEL, 'text')
       break
+
+    case 'hug':
+      var rawHugs = fs.readFileSync('./huggifs.txt').toString('utf-8')
+      var huggifs = rawHugs.split('\n')
+      if (args.length > 0) {
+        if (message.author.id === message.mentions.members.first().id) {
+          message.channel.send("You can't hug yourself, you only reside in one plane of existence!")
+        } else
+
+        if (message.mentions.members.first().id === '580420125015015424') {
+          message.channel.send("You can't hug me. I'm an animal. I'm a beast unworthy of affection except for that of a bell.")
+        } else {
+          message.channel.send({ embed: {
+            color: 3886392,
+            author: {
+              name: 'ARGbot',
+              icon_url: client.user.avatarURL
+            },
+            'image': {
+              'url': huggifs[Math.floor(Math.random() * huggifs.length)]
+            },
+            description: message.mentions.members.first() + ' has been hugged!'
+          } })
+        }
+      }
+      break
+
+    case 'animalpic':
+      var rawPictures = fs.readFileSync('./animalpictures.txt').toString('utf-8')
+      var pictures = rawPictures.split('\n')
+      message.channel.send({ embed: {
+        color: embedColour,
+        author: {
+          name: 'ARGbot',
+          icon_url: client.user.avatarURL
+        },
+        'image': {
+          'url': pictures[Math.floor(Math.random() * pictures.length)]
+        },
+        description: message.mentions.members.first() + ' has been hugged!'
+      } })
   }
 
   function help (title, usage, description) {
     checkPavlov()
     message.channel.send({
       embed: {
-        color: 5840151,
+        color: embedColour,
         title: 'Command: ' + title,
         fields: [{
           name: 'Usage: ',
