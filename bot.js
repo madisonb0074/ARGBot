@@ -207,8 +207,7 @@ client.on('message', message => {
         },
         'image': {
           'url': pictures[Math.floor(Math.random() * pictures.length)]
-        },
-        description: message.mentions.members.first() + ' has been hugged!'
+        }
       } })
   }
 
