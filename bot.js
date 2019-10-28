@@ -80,22 +80,17 @@ client.on('message', message => {
       if (message.member.nickname === 'PAVLOV') {
         message.channel.send('A bell rings. Thanks dad.')
       }
-      var dadJokes = [
-        // add more dadjokes
-        '',
-        ''
-      ]
-
-      var randomJoke = dadJokes[Math.floor(Math.random() * dadJokes.length)]
-      message.channel.send(randomJoke)
-
+      var rawJoke = fs.readFileSync('./dadjokes.txt').toString('utf-8')
+      var dadJokeResponses = rawJoke.split('\n')
+      var randomAnswer = dadJokeResponses[Math.floor(Math.random() * dadJokeResponses.length)]
+      message.channel.send(randomAnswer)
       break
     case '8ball':
       checkPavlov()
-      var rawText = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
-      var eightBallResponses = rawText.split('\n')
-      var randomAnswer = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
-      message.channel.send(randomAnswer)
+      var rawResponse = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
+      var eightBallResponses = rawResponse.split('\n')
+      var randomJoke = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
+      message.channel.send(randomJoke)
       break
       // help command, outlines all the commands along with important information within an embed
       // if there are extra args (words within a command) that connect with a command, elaborate on the command
