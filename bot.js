@@ -128,7 +128,9 @@ client.on('message', message => {
         var funCommands = [
           '8ball',
           'ping',
-          'dadjoke'
+          'dadjoke',
+          'hug',
+          'animalpic'
         ]
 
         var functionalCommands = [
