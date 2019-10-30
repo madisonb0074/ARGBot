@@ -221,6 +221,10 @@ client.on('message', message => {
           }
         }
       })
+      break
+
+    case 'pet':
+      pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '☝️', '💤', 1)
   }
 
   function help (title, usage, description) {
@@ -239,6 +243,28 @@ client.on('message', message => {
         }
         ]
       }
+    })
+  }
+  // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
+  function pet (message, image, emoji1, emoji2, emoji3, reactionNumber) {
+    message.channel.send(message)
+    var petFirst = message.channel.send(image)
+    petFirst.react(emoji1).then(() => petFirst.react(emoji2).then(() => petFirst.react(emoji3)))
+    const filter = (reaction, user) => reaction.emoji.name === emoji1 || emoji2 || emoji3
+    petFirst.then(m => {
+      m.awaitReactions(filter, { max: 1 })
+        .then(collected => {
+          const reaction = collected.first
+
+          if (reaction.emoji.name === emoji1) {
+            return reactionNumber + 1
+          } else if (reaction.emoji.name === emoji2) {
+            return reactionNumber + 2
+          } else if (reaction.emoji.name === emoji3) {
+            return reactionNumber + 3
+          }
+        })
+        .catch(console.error)
     })
   }
 })
