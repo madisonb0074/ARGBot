@@ -246,8 +246,8 @@ client.on('message', message => {
     })
   }
   // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
-  function pet (message, image, emoji1, emoji2, emoji3, reactionNumber) {
-    message.channel.send(message)
+  function pet (msg, image, emoji1, emoji2, emoji3, reactionNumber) {
+    message.channel.send(msg)
     var petFirst = message.channel.send(image)
     petFirst.react(emoji1).then(() => petFirst.react(emoji2).then(() => petFirst.react(emoji3)))
     const filter = (reaction, user) => reaction.emoji.name === emoji1 || emoji2 || emoji3
