@@ -249,7 +249,7 @@ client.on('message', message => {
   function pet (msg, image, emoji1, emoji2, emoji3, reactionNumber) {
     message.channel.send(msg)
     var petFirst = message.channel.send(image)
-    petFirst.react(emoji1).then(() => petFirst.react(emoji2).then(() => petFirst.react(emoji3)))
+    message.react(emoji1).then(() => message.react(emoji2).then(() => message.react(emoji3)))
     const filter = (reaction, user) => reaction.emoji.name === emoji1 || emoji2 || emoji3
     petFirst.then(m => {
       m.awaitReactions(filter, { max: 1 })
