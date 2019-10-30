@@ -45,8 +45,7 @@ client.on('message', message => {
     message.channel.send('Why are you speaking of me?')
   }
   if (message.author.bot) return
-  if (message.content.toLowerCase().includes('animal')) {
-    // if there is another user named pavlov, do not rename
+  if (message.content.toLowerCase().includes('since')) {
     // set botname to pavlovs dog by finding bot ID and changing the nickname
     message.guild.members.get(client.user.id).setNickname('PAVLOV\'S DOG')
     message.member.setNickname('PAVLOV')
