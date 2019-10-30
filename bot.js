@@ -87,6 +87,9 @@ client.on('message', message => {
       message.channel.send(randomAnswer)
       break
     case '8ball':
+      if (args.length === 0) {
+        message.channel.send('Please ask a yes/no question after this command.')
+      }
       checkPavlov()
       var rawResponse = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
       var eightBallResponses = rawResponse.split('\n')
@@ -175,6 +178,9 @@ client.on('message', message => {
     case 'hug':
       var rawHugs = fs.readFileSync('./huggifs.txt').toString('utf-8')
       var huggifs = rawHugs.split('\n')
+      if (args.length === 0) {
+        message.channel.send('This command requires you to ping a user after your command!')
+      }
       if (args.length > 0) {
         if (message.author.id === message.mentions.members.first().id) {
           message.channel.send("You can't hug yourself, you only reside in one plane of existence!")
@@ -185,7 +191,7 @@ client.on('message', message => {
         } else {
           message.channel.send({
             embed: {
-              color: 3886392,
+              color: embedColour,
               author: {
                 name: 'ARGbot',
                 icon_url: client.user.avatarURL
