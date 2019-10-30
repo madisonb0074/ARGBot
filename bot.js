@@ -41,10 +41,10 @@ client.on('ready', () => {
 client.on('message', message => {
   // initial messing around
   // if the message sender is a bot, ignore it to prevent feedback loop
+  if (message.author.bot) return
   if (message.content.toLowerCase().includes('ARGBot')) {
     message.channel.send('Why are you speaking of me?')
   }
-  if (message.author.bot) return
   if (message.content.toLowerCase().includes('since')) {
     // set botname to pavlovs dog by finding bot ID and changing the nickname
     message.guild.members.get(client.user.id).setNickname('PAVLOV\'S DOG')
