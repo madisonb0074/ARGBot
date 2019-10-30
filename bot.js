@@ -183,17 +183,19 @@ client.on('message', message => {
         if (message.mentions.members.first().id === '580420125015015424') {
           message.channel.send("You can't hug me. I'm an animal. I'm a beast unworthy of affection except for that of a bell.")
         } else {
-          message.channel.send({ embed: {
-            color: 3886392,
-            author: {
-              name: 'ARGbot',
-              icon_url: client.user.avatarURL
-            },
-            'image': {
-              'url': huggifs[Math.floor(Math.random() * huggifs.length)]
-            },
-            description: message.mentions.members.first() + ' has been hugged!'
-          } })
+          message.channel.send({
+            embed: {
+              color: 3886392,
+              author: {
+                name: 'ARGbot',
+                icon_url: client.user.avatarURL
+              },
+              image: {
+                url: huggifs[Math.floor(Math.random() * huggifs.length)]
+              },
+              description: message.mentions.members.first() + ' has been hugged!'
+            }
+          })
         }
       }
       break
@@ -201,16 +203,18 @@ client.on('message', message => {
     case 'animalpic':
       var rawPictures = fs.readFileSync('./animalpictures.txt').toString('utf-8')
       var pictures = rawPictures.split('\n')
-      message.channel.send({ embed: {
-        color: embedColour,
-        author: {
-          name: 'ARGbot',
-          icon_url: client.user.avatarURL
-        },
-        'image': {
-          'url': pictures[Math.floor(Math.random() * pictures.length)]
+      message.channel.send({
+        embed: {
+          color: embedColour,
+          author: {
+            name: 'ARGbot',
+            icon_url: client.user.avatarURL
+          },
+          image: {
+            url: pictures[Math.floor(Math.random() * pictures.length)]
+          }
         }
-      } })
+      })
   }
 
   function help (title, usage, description) {
