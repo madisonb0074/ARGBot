@@ -89,12 +89,13 @@ client.on('message', message => {
     case '8ball':
       if (args.length === 0) {
         message.channel.send('Please ask a yes/no question after this command.')
+      } else {
+        checkPavlov()
+        var rawResponse = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
+        var eightBallResponses = rawResponse.split('\n')
+        var randomResponse = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
+        message.channel.send(randomResponse)
       }
-      checkPavlov()
-      var rawResponse = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
-      var eightBallResponses = rawResponse.split('\n')
-      var randomJoke = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
-      message.channel.send(randomJoke)
       break
       // help command, outlines all the commands along with important information within an embed
       // if there are extra args (words within a command) that connect with a command, elaborate on the command
