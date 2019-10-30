@@ -86,11 +86,15 @@ client.on('message', message => {
       message.channel.send(randomAnswer)
       break
     case '8ball':
-      checkPavlov()
-      var rawResponse = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
-      var eightBallResponses = rawResponse.split('\n')
-      var randomJoke = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
-      message.channel.send(randomJoke)
+      if (args.length === 0) {
+        message.channel.send('Please ask a yes/no question after this command.')
+      } else {
+        checkPavlov()
+        var rawResponse = fs.readFileSync('./8ballanswers.txt').toString('utf-8')
+        var eightBallResponses = rawResponse.split('\n')
+        var randomResponse = eightBallResponses[Math.floor(Math.random() * eightBallResponses.length)]
+        message.channel.send(randomResponse)
+      }
       break
       // help command, outlines all the commands along with important information within an embed
       // if there are extra args (words within a command) that connect with a command, elaborate on the command
@@ -174,6 +178,9 @@ client.on('message', message => {
     case 'hug':
       var rawHugs = fs.readFileSync('./huggifs.txt').toString('utf-8')
       var huggifs = rawHugs.split('\n')
+      if (args.length === 0) {
+        message.channel.send('This command requires you to ping a user after your command!')
+      }
       if (args.length > 0) {
         if (message.author.id === message.mentions.members.first().id) {
           message.channel.send("You can't hug yourself, you only reside in one plane of existence!")
@@ -182,17 +189,19 @@ client.on('message', message => {
         if (message.mentions.members.first().id === '580420125015015424') {
           message.channel.send("You can't hug me. I'm an animal. I'm a beast unworthy of affection except for that of a bell.")
         } else {
-          message.channel.send({ embed: {
-            color: 3886392,
-            author: {
-              name: 'ARGbot',
-              icon_url: client.user.avatarURL
-            },
-            'image': {
-              'url': huggifs[Math.floor(Math.random() * huggifs.length)]
-            },
-            description: message.mentions.members.first() + ' has been hugged!'
-          } })
+          message.channel.send({
+            embed: {
+              color: embedColour,
+              author: {
+                name: 'ARGbot',
+                icon_url: client.user.avatarURL
+              },
+              image: {
+                url: huggifs[Math.floor(Math.random() * huggifs.length)]
+              },
+              description: message.mentions.members.first() + ' has been hugged!'
+            }
+          })
         }
       }
       break
@@ -200,16 +209,18 @@ client.on('message', message => {
     case 'animalpic':
       var rawPictures = fs.readFileSync('./animalpictures.txt').toString('utf-8')
       var pictures = rawPictures.split('\n')
-      message.channel.send({ embed: {
-        color: embedColour,
-        author: {
-          name: 'ARGbot',
-          icon_url: client.user.avatarURL
-        },
-        'image': {
-          'url': pictures[Math.floor(Math.random() * pictures.length)]
+      message.channel.send({
+        embed: {
+          color: embedColour,
+          author: {
+            name: 'ARGbot',
+            icon_url: client.user.avatarURL
+          },
+          image: {
+            url: pictures[Math.floor(Math.random() * pictures.length)]
+          }
         }
-      } })
+      })
   }
 
   function help (title, usage, description) {
