@@ -223,7 +223,7 @@ client.on('message', message => {
       })
       break
 
-    case pet:
+    case 'pet':
     // pet command that is like tamogotchi, users must continually play with or else it dies
     // usage: function pet (msg, image, emoji1, emoji2, emoji3, eventID, nextEvent1, nextEvent2, nextEvent3)
     // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
