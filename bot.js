@@ -291,13 +291,13 @@ client.on('message', message => {
           const emoji3Filter = (reaction) => reaction.emoji.name === emoji3
 
           const emoji1collector = msg.createReactionCollector(emoji1Filter, {
-            time: 60000
+            time: 10000
           })
           const emoji2collector = msg.createReactionCollector(emoji2Filter, {
-            time: 60000
+            time: 10000
           })
           const emoji3collector = msg.createReactionCollector(emoji3Filter, {
-            time: 60000
+            time: 10000
           })
 
           emoji1collector.on('collect', r => {
@@ -313,37 +313,37 @@ client.on('message', message => {
           })
         })
       })
+      if ((emoji1level > emoji2level) && (emoji1level > emoji3level)) {
+        return nextEvent1
+      } else if ((emoji2level > emoji1level) && (emoji2level > emoji3level)) {
+        return nextEvent2
+      } else if ((emoji3level > emoji1level) && (emoji3level > emoji2level)) {
+        return nextEvent3
+      } else if ((emoji1level === emoji2level) && (emoji1level > emoji3level)) {
+        var nextevent1or2 = [
+          emoji1level,
+          emoji2level
+        ]
+        var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
+        return randomResponse1
+      } else if ((emoji2level === emoji3level) && (emoji2level > emoji1level)) {
+        var nextevent2or3 = [
+          emoji2level,
+          emoji3level
+        ]
+        var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
+        return randomResponse2
+      } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level > 0)) {
+        var nextevent12or3 = [
+          emoji2level,
+          emoji3level
+        ]
+        var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
+        return randomResponse3
+      } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
+        return 1337
+      }
     })
-    if ((emoji1level > emoji2level) && (emoji1level > emoji3level)) {
-      return nextEvent1
-    } else if ((emoji2level > emoji1level) && (emoji2level > emoji3level)) {
-      return nextEvent2
-    } else if ((emoji3level > emoji1level) && (emoji3level > emoji2level)) {
-      return nextEvent3
-    } else if ((emoji1level === emoji2level) && (emoji1level > emoji3level)) {
-      var nextevent1or2 = [
-        emoji1level,
-        emoji2level
-      ]
-      var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
-      return randomResponse1
-    } else if ((emoji2level === emoji3level) && (emoji2level > emoji1level)) {
-      var nextevent2or3 = [
-        emoji2level,
-        emoji3level
-      ]
-      var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
-      return randomResponse2
-    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level > 0)) {
-      var nextevent12or3 = [
-        emoji2level,
-        emoji3level
-      ]
-      var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
-      return randomResponse3
-    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
-      return 1337
-    }
   }
 })
 
