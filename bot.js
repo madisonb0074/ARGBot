@@ -248,10 +248,13 @@ client.on('message', message => {
   // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
   function pet (msg, image, emoji1, emoji2, emoji3, reactionNumber) {
     message.channel.send(msg)
-    var petFirst = message.channel.send(image)
-    message.react(emoji1).then(() => message.react(emoji2).then(() => message.react(emoji3)))
+    message.channel.send(image).then(sentMessage => {
+      sentMessage.react(emoji1)
+      sentMessage.react(emoji2)
+      sentMessage.react(emoji3)
+    })
     const filter = (reaction, user) => reaction.emoji.name === emoji1 || emoji2 || emoji3
-    petFirst.then(m => {
+    message.then(m => {
       m.awaitReactions(filter, { max: 1 })
         .then(collected => {
           const reaction = collected.first
@@ -264,7 +267,6 @@ client.on('message', message => {
             return reactionNumber + 3
           }
         })
-        .catch(console.error)
     })
   }
 })
