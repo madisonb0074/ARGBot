@@ -225,6 +225,7 @@ client.on('message', message => {
 
     case 'pet':
       pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1)
+      if (pet())
   }
 
   function help (title, usage, description) {
@@ -254,9 +255,8 @@ client.on('message', message => {
       sentMessage.react(emoji2)
       sentMessage.react(emoji3)
     })
-    const filter = (reaction, user) => reaction.emoji.name === emoji1 || emoji2 || emoji3
     messagetocheck.then(m => {
-      m.awaitReactions(filter, { max: 1 })
+      m.awaitReactions({ max: 1 })
         .then(collected => {
           const reaction = collected.first
 
@@ -269,8 +269,7 @@ client.on('message', message => {
           }
         })
         .catch(console.error)
-    })
-    return reactionNumber + eventNumber
+    }_
   }
 })
 
