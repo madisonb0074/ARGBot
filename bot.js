@@ -227,7 +227,7 @@ client.on('message', message => {
     // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
     // event number goes up in multiples of three
       pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1)
-      if (pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1) === 1) {
+      if (pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1) === 10) {
         pet('SMASH.', 'https://i.imgur.com/sgd2BUx.jpg', '👊', '👆', '💤', 3)
       }
       break
@@ -253,7 +253,6 @@ client.on('message', message => {
   }
   // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
   function pet (msg, image, emoji1, emoji2, emoji3, eventNumber) {
-    var reactionNumber = 0
     message.channel.send(msg)
     var messagetocheck = message.channel.send(image).then(sentMessage => {
       sentMessage.react(emoji1)
@@ -266,16 +265,16 @@ client.on('message', message => {
           const reaction = collected.first
 
           if (reaction.emoji.name === emoji1) {
-            reactionNumber *= 10
+            eventNumber *= 10
           } else if (reaction.emoji.name === emoji2) {
-            reactionNumber *= 20
+            eventNumber *= 20
           } else if (reaction.emoji.name === emoji3) {
-            reactionNumber *= 30
+            eventNumber *= 30
           }
         })
         .catch(console.error)
     })
-    return reactionNumber + eventNumber
+    return eventNumber
   }
 })
 
