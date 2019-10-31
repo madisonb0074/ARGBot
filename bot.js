@@ -225,7 +225,6 @@ client.on('message', message => {
 
     case 'pet':
       pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1)
-      if (pet())
   }
 
   function help (title, usage, description) {
@@ -269,7 +268,8 @@ client.on('message', message => {
           }
         })
         .catch(console.error)
-    }_
+    })
+    return reactionNumber + eventNumber
   }
 })
 
