@@ -224,7 +224,7 @@ client.on('message', message => {
       break
 
     case 'pet':
-      pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '☝️', '💤', 1)
+      pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1)
   }
 
   function help (title, usage, description) {
@@ -246,7 +246,8 @@ client.on('message', message => {
     })
   }
   // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
-  function pet (msg, image, emoji1, emoji2, emoji3, reactionNumber) {
+  function pet (msg, image, emoji1, emoji2, emoji3, eventNumber) {
+    var reactionNumber = 0
     message.channel.send(msg)
     var messagetocheck = message.channel.send(image).then(sentMessage => {
       sentMessage.react(emoji1)
@@ -260,14 +261,16 @@ client.on('message', message => {
           const reaction = collected.first
 
           if (reaction.emoji.name === emoji1) {
-            return reactionNumber + 1
+            reactionNumber += 1
           } else if (reaction.emoji.name === emoji2) {
-            return reactionNumber + 2
+            reactionNumber += 2
           } else if (reaction.emoji.name === emoji3) {
-            return reactionNumber + 3
+            reactionNumber += 3
           }
         })
+        .catch(console.error)
     })
+    return reactionNumber + eventNumber
   }
 })
 
