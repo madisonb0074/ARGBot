@@ -226,7 +226,6 @@ client.on('message', message => {
     case 'pet':
     // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
     // event number goes up in multiples of three
-      pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1)
       if (pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1) === 10) {
         pet('SMASH.', 'https://i.imgur.com/sgd2BUx.jpg', '👊', '👆', '💤', 3)
       }
