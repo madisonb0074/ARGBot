@@ -223,13 +223,27 @@ client.on('message', message => {
       })
       break
 
-    case 'pet':
-    // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
-    // event number goes up in multiples of three
-      if (pet('Your pet is still in egg form!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '👆', '💤', 1) === 10) {
-        pet('SMASH.', 'https://i.imgur.com/sgd2BUx.jpg', '👊', '👆', '💤', 3)
+    case pet:
+    // pet command that is like tamogotchi, users must continually play with or else it dies
+    // usage: function pet (msg, image, emoji1, emoji2, emoji3, eventID, nextEvent1, nextEvent2, nextEvent3)
+    // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
+    // each function call is one pet "event"
+      message.channel.send('You spawned a new pet!')
+      if ((pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓', 1, 2, 3, 4)) === 2) {
+        message.channel.send({
+          embed: {
+            color: embedColour,
+            author: {
+              name: 'ARGbot',
+              icon_url: client.user.avatarURL
+            },
+            description: 'Uh oh! You smashed him!'
+          },
+          image: {
+            url: 'https://i.imgur.com/sgd2BUx.jpg'
+          }
+        })
       }
-      break
   }
 
   function help (title, usage, description) {
@@ -250,30 +264,86 @@ client.on('message', message => {
       }
     })
   }
-  // message is message sent before pet, image is the image pet will have, reaction wanted is the possible reactions
-  function pet (msg, image, emoji1, emoji2, emoji3, eventNumber) {
-    message.channel.send(msg)
-    var messagetocheck = message.channel.send(image).then(sentMessage => {
-      sentMessage.react(emoji1)
-      sentMessage.react(emoji2)
-      sentMessage.react(emoji3)
-    })
-    messagetocheck.then(m => {
-      m.awaitReactions({ max: 1 })
-        .then(collected => {
-          const reaction = collected.first
+  // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
+  function pet (msg, image, emoji1, emoji2, emoji3, eventID, nextEvent1, nextEvent2, nextEvent3) {
+    var emoji1level = 0
+    var emoji2level = 0
+    var emoji3level = 0
+    message.channel.send({
+      embed: {
+        color: embedColour,
+        author: {
+          name: 'ARGbot',
+          icon_url: client.user.avatarURL
+        },
+        description: msg
+      },
+      image: {
+        url: image
+      }
+    }).then(msg => {
+      msg.react(emoji1).then(r => {
+        msg.react(emoji2).then(r => {
+          msg.react(emoji3)
 
-          if (reaction.emoji.name === emoji1) {
-            eventNumber *= 10
-          } else if (reaction.emoji.name === emoji2) {
-            eventNumber *= 20
-          } else if (reaction.emoji.name === emoji3) {
-            eventNumber *= 30
-          }
+          const emoji1Filter = (reaction) => reaction.emoji.name === emoji1
+          const emoji2Filter = (reaction) => reaction.emoji.name === emoji2
+          const emoji3Filter = (reaction) => reaction.emoji.name === emoji3
+
+          const emoji1collector = msg.createReactionCollector(emoji1Filter, {
+            time: 60000
+          })
+          const emoji2collector = msg.createReactionCollector(emoji2Filter, {
+            time: 60000
+          })
+          const emoji3collector = msg.createReactionCollector(emoji3Filter, {
+            time: 60000
+          })
+
+          emoji1collector.on('collect', r => {
+            emoji1level++
+          })
+
+          emoji2collector.on('collect', r => {
+            emoji2level++
+          })
+
+          emoji3collector.on('collect', r => {
+            emoji3level++
+          })
         })
-        .catch(console.error)
+      })
     })
-    return eventNumber
+    if ((emoji1level > emoji2level) && (emoji1level > emoji3level)) {
+      return nextEvent1
+    } else if ((emoji2level > emoji1level) && (emoji2level > emoji3level)) {
+      return nextEvent2
+    } else if ((emoji3level > emoji1level) && (emoji3level > emoji2level)) {
+      return nextEvent3
+    } else if ((emoji1level === emoji2level) && (emoji1level > emoji3level)) {
+      var nextevent1or2 = [
+        emoji1level,
+        emoji2level
+      ]
+      var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
+      return randomResponse1
+    } else if ((emoji2level === emoji3level) && (emoji2level > emoji1level)) {
+      var nextevent2or3 = [
+        emoji2level,
+        emoji3level
+      ]
+      var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
+      return randomResponse2
+    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level > 0)) {
+      var nextevent12or3 = [
+        emoji2level,
+        emoji3level
+      ]
+      var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
+      return randomResponse3
+    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
+      return 1337
+    }
   }
 })
 
