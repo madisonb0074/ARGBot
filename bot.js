@@ -234,9 +234,26 @@ client.on('message', message => {
     // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
     // each function call is one pet "event"
       message.channel.send('You spawned a new pet!')
-      if (nextEvent === 0) {
-        pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓')
+      var nextOccurence = 0
+      pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓').then(
+        nextOccurence = findHighestLevel(emote1level, emote2level, emote3level)
+      )
+      if (nextOccurence === 1) {
+        message.channel.send({
+          embed: {
+            color: embedColour,
+            title: 'Uh oh! You smashed him.',
+            author: {
+              name: 'ARGbot',
+              icon_url: client.user.avatarURL
+            },
+            image: {
+              url: 'https://i.imgur.com/sgd2BUx.jpg'
+            }
+          }
+        })
       }
+
       break
   }
   function help (title, usage, description) {
@@ -258,21 +275,21 @@ client.on('message', message => {
     })
   }
   // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
-  function pet (msg, image, emoji1, emoji2, emoji3) {
+  async function pet (msg, image, emoji1, emoji2, emoji3) {
     emote1level = 0
     emote2level = 0
     emote3level = 0
     message.channel.send({
       embed: {
         color: embedColour,
+        title: msg,
         author: {
           name: 'ARGbot',
           icon_url: client.user.avatarURL
         },
-        description: msg
-      },
-      image: {
-        url: image
+        image: {
+          url: image
+        }
       }
     }).then(msg => {
       msg.react(emoji1).then(r => {
@@ -313,6 +330,7 @@ client.on('message', message => {
 
           emoji3collector.on('end', collected => {
             nextEvent = findHighestLevel(emote1level, emote2level, emote3level)
+            return nextEvent
           })
         })
       })
