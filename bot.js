@@ -6,6 +6,10 @@ const CHANNEL = config.channel
 var fs = require('fs')
 
 var embedColour = 0xad1212
+
+var emote1level
+var emote2level
+var emote3level
 // **SIMPLE EVENT HANDLERS*
 
 // Sends message upon server join, outlining very important info such as how to see bot log
@@ -229,21 +233,10 @@ client.on('message', message => {
     // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
     // each function call is one pet "event"
       message.channel.send('You spawned a new pet!')
-      if ((pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓', 1, 2, 3, 4)) === 2) {
-        message.channel.send({
-          embed: {
-            color: embedColour,
-            author: {
-              name: 'ARGbot',
-              icon_url: client.user.avatarURL
-            },
-            description: 'Uh oh! You smashed him!'
-          },
-          image: {
-            url: 'https://i.imgur.com/sgd2BUx.jpg'
-          }
-        })
-      }
+      pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓')
+      message.channel.send(emote1level)
+      message.channel.send(emote2level)
+      message.channel.send(emote3level)
       break
   }
   function help (title, usage, description) {
@@ -265,10 +258,10 @@ client.on('message', message => {
     })
   }
   // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
-  function pet (msg, image, emoji1, emoji2, emoji3, eventID, nextEvent1, nextEvent2, nextEvent3) {
-    var emoji1level = 0
-    var emoji2level = 0
-    var emoji3level = 0
+  function pet (msg, image, emoji1, emoji2, emoji3) {
+    emote1level = 0
+    emote2level = 0
+    emote3level = 0
     message.channel.send({
       embed: {
         color: embedColour,
@@ -301,49 +294,55 @@ client.on('message', message => {
           })
 
           emoji1collector.on('collect', r => {
-            emoji1level++
+            emote1level++
           })
 
           emoji2collector.on('collect', r => {
-            emoji2level++
+            emote2level++
           })
 
           emoji3collector.on('collect', r => {
-            emoji3level++
+            emote3level++
           })
         })
       })
-      if ((emoji1level > emoji2level) && (emoji1level > emoji3level)) {
-        return nextEvent1
-      } else if ((emoji2level > emoji1level) && (emoji2level > emoji3level)) {
-        return nextEvent2
-      } else if ((emoji3level > emoji1level) && (emoji3level > emoji2level)) {
-        return nextEvent3
-      } else if ((emoji1level === emoji2level) && (emoji1level > emoji3level)) {
-        var nextevent1or2 = [
-          emoji1level,
-          emoji2level
-        ]
-        var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
-        return randomResponse1
-      } else if ((emoji2level === emoji3level) && (emoji2level > emoji1level)) {
-        var nextevent2or3 = [
-          emoji2level,
-          emoji3level
-        ]
-        var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
-        return randomResponse2
-      } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level > 0)) {
-        var nextevent12or3 = [
-          emoji2level,
-          emoji3level
-        ]
-        var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
-        return randomResponse3
-      } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
-        return 1337
-      }
     })
+  }
+  function findHighestLevel (emoji1level, emoji2level, emoji3level) {
+    var nextEvent1 = 1
+    var nextEvent2 = 2
+    var nextEvent3 = 3
+    if ((emoji1level > emoji2level) && (emoji1level > emoji3level)) {
+      return nextEvent1
+    } else if ((emoji2level > emoji1level) && (emoji2level > emoji3level)) {
+      return nextEvent2
+    } else if ((emoji3level > emoji1level) && (emoji3level > emoji2level)) {
+      return nextEvent3
+    } else if ((emoji1level === emoji2level) && (emoji1level > emoji3level)) {
+      var nextevent1or2 = [
+        nextEvent1,
+        nextEvent2
+      ]
+      var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
+      return randomResponse1
+    } else if ((emoji2level === emoji3level) && (emoji2level > emoji1level)) {
+      var nextevent2or3 = [
+        nextEvent2,
+        nextEvent3
+      ]
+      var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
+      return randomResponse2
+    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level > 0)) {
+      var nextevent12or3 = [
+        nextEvent1,
+        nextEvent2,
+        nextEvent3
+      ]
+      var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
+      return randomResponse3
+    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
+      return 0
+    }
   }
 })
 
