@@ -235,10 +235,8 @@ client.on('message', message => {
     // each function call is one pet "event"
       message.channel.send('You spawned a new pet!')
       var nextOccurence = 0
-      pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓').then(
-        nextOccurence = findHighestLevel(emote1level, emote2level, emote3level)
-      )
-      if (nextOccurence === 1) {
+      pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓', findHighestLevel(emote1level, emote2level, emote3level))
+
         message.channel.send({
           embed: {
             color: embedColour,
@@ -252,7 +250,7 @@ client.on('message', message => {
             }
           }
         })
-      }
+
 
       break
   }
@@ -275,7 +273,7 @@ client.on('message', message => {
     })
   }
   // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
-  async function pet (msg, image, emoji1, emoji2, emoji3) {
+  function pet (msg, image, emoji1, emoji2, emoji3, callback) {
     emote1level = 0
     emote2level = 0
     emote3level = 0
@@ -329,8 +327,7 @@ client.on('message', message => {
           })
 
           emoji3collector.on('end', collected => {
-            nextEvent = findHighestLevel(emote1level, emote2level, emote3level)
-            return nextEvent
+            callback()
           })
         })
       })
