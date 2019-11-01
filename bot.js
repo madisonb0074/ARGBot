@@ -304,6 +304,11 @@ client.on('message', message => {
           emoji3collector.on('collect', r => {
             emote3level++
           })
+
+          emoji1collector.on('end', collected => {
+            message.channel.send(emote1level)
+          }
+          )
         })
       })
     })
