@@ -10,6 +10,7 @@ var embedColour = 0xad1212
 var emote1level
 var emote2level
 var emote3level
+var nextEvent = 0
 // **SIMPLE EVENT HANDLERS*
 
 // Sends message upon server join, outlining very important info such as how to see bot log
@@ -233,10 +234,9 @@ client.on('message', message => {
     // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
     // each function call is one pet "event"
       message.channel.send('You spawned a new pet!')
-      pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓')
-      message.channel.send(emote1level)
-      message.channel.send(emote2level)
-      message.channel.send(emote3level)
+      if (nextEvent === 0) {
+        pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓')
+      }
       break
   }
   function help (title, usage, description) {
@@ -306,9 +306,14 @@ client.on('message', message => {
           })
 
           emoji1collector.on('end', collected => {
-            message.channel.send(emote1level)
-          }
-          )
+          })
+
+          emoji2collector.on('end', collected => {
+          })
+
+          emoji3collector.on('end', collected => {
+            nextEvent = findHighestLevel(emote1level, emote2level, emote3level)
+          })
         })
       })
     })
@@ -346,7 +351,7 @@ client.on('message', message => {
       var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
       return randomResponse3
     } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
-      return 0
+      return 1337
     }
   }
 })
