@@ -234,9 +234,9 @@ client.on('message', message => {
     // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
     // each function call is one pet "event"
       message.channel.send('You spawned a new pet!')
-      var nextOccurence = 0
+      nextEvent = 0
       pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓', findHighestLevel(emote1level, emote2level, emote3level))
-
+      if (nextEvent === 1) {
         message.channel.send({
           embed: {
             color: embedColour,
@@ -250,7 +250,7 @@ client.on('message', message => {
             }
           }
         })
-
+      }
 
       break
   }
@@ -338,25 +338,25 @@ client.on('message', message => {
     var nextEvent2 = 2
     var nextEvent3 = 3
     if ((emoji1level > emoji2level) && (emoji1level > emoji3level)) {
-      return nextEvent1
+      nextEvent = nextEvent1
     } else if ((emoji2level > emoji1level) && (emoji2level > emoji3level)) {
-      return nextEvent2
+      nextEvent = nextEvent2
     } else if ((emoji3level > emoji1level) && (emoji3level > emoji2level)) {
-      return nextEvent3
+      nextEvent = nextEvent3
     } else if ((emoji1level === emoji2level) && (emoji1level > emoji3level)) {
       var nextevent1or2 = [
         nextEvent1,
         nextEvent2
       ]
       var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
-      return randomResponse1
+      nextEvent = randomResponse1
     } else if ((emoji2level === emoji3level) && (emoji2level > emoji1level)) {
       var nextevent2or3 = [
         nextEvent2,
         nextEvent3
       ]
       var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
-      return randomResponse2
+      nextEvent = randomResponse2
     } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level > 0)) {
       var nextevent12or3 = [
         nextEvent1,
@@ -364,9 +364,9 @@ client.on('message', message => {
         nextEvent3
       ]
       var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
-      return randomResponse3
+      nextEvent = randomResponse3
     } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
-      return 1337
+      nextEvent = 1337
     }
   }
 })
