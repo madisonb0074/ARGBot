@@ -235,7 +235,7 @@ client.on('message', message => {
     // each function call is one pet "event"
       message.channel.send('You spawned a new pet!')
       nextEvent = 0
-      pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓', findHighestLevel(emote1level, emote2level, emote3level))
+      pet('Your pet has a new egg! React to decide what to do with it!', 'https://i.imgur.com/WJhYIaK.jpg', '👊', '💤', '🥓', findHighestLevel)
       if (nextEvent === 1) {
         message.channel.send({
           embed: {
@@ -333,31 +333,31 @@ client.on('message', message => {
       })
     })
   }
-  function findHighestLevel (emoji1level, emoji2level, emoji3level) {
+  function findHighestLevel () {
     var nextEvent1 = 1
     var nextEvent2 = 2
     var nextEvent3 = 3
-    if ((emoji1level > emoji2level) && (emoji1level > emoji3level)) {
+    if ((emote1level > emote2level) && (emote1level > emote3level)) {
       nextEvent = nextEvent1
-    } else if ((emoji2level > emoji1level) && (emoji2level > emoji3level)) {
+    } else if ((emote2level > emote1level) && (emote2level > emote3level)) {
       nextEvent = nextEvent2
-    } else if ((emoji3level > emoji1level) && (emoji3level > emoji2level)) {
+    } else if ((emote3level > emote1level) && (emote3level > emote2level)) {
       nextEvent = nextEvent3
-    } else if ((emoji1level === emoji2level) && (emoji1level > emoji3level)) {
+    } else if ((emote1level === emote2level) && (emote1level > emote3level)) {
       var nextevent1or2 = [
         nextEvent1,
         nextEvent2
       ]
       var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
       nextEvent = randomResponse1
-    } else if ((emoji2level === emoji3level) && (emoji2level > emoji1level)) {
+    } else if ((emote2level === emote3level) && (emote2level > emote1level)) {
       var nextevent2or3 = [
         nextEvent2,
         nextEvent3
       ]
       var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
       nextEvent = randomResponse2
-    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level > 0)) {
+    } else if ((emote1level === emote2level === emote3level) && (emote1level > 0)) {
       var nextevent12or3 = [
         nextEvent1,
         nextEvent2,
@@ -365,7 +365,7 @@ client.on('message', message => {
       ]
       var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
       nextEvent = randomResponse3
-    } else if ((emoji1level === emoji2level === emoji3level) && (emoji1level === 0)) {
+    } else if ((emote1level === emote2level === emote3level) && (emote1level === 0)) {
       nextEvent = 1337
     }
   }
