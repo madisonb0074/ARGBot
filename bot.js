@@ -327,7 +327,14 @@ client.on('message', message => {
           })
 
           emoji3collector.on('end', collected => {
-            callback()
+            if (callback() === 1) {
+              nextEvent = 1
+            } else if (callback() === 2) {
+              nextEvent = 2
+            } else if (callback() === 3) {
+              nextEvent = 3
+            } else if (callback() === 1337) {
+            }
           })
         })
       })
@@ -338,25 +345,25 @@ client.on('message', message => {
     var nextEvent2 = 2
     var nextEvent3 = 3
     if ((emote1level > emote2level) && (emote1level > emote3level)) {
-      nextEvent = nextEvent1
+      return nextEvent1
     } else if ((emote2level > emote1level) && (emote2level > emote3level)) {
-      nextEvent = nextEvent2
+      return nextEvent2
     } else if ((emote3level > emote1level) && (emote3level > emote2level)) {
-      nextEvent = nextEvent3
+      return nextEvent3
     } else if ((emote1level === emote2level) && (emote1level > emote3level)) {
       var nextevent1or2 = [
         nextEvent1,
         nextEvent2
       ]
       var randomResponse1 = nextevent1or2[Math.floor(Math.random() * 2)]
-      nextEvent = randomResponse1
+      return randomResponse1
     } else if ((emote2level === emote3level) && (emote2level > emote1level)) {
       var nextevent2or3 = [
         nextEvent2,
         nextEvent3
       ]
       var randomResponse2 = nextevent2or3[Math.floor(Math.random() * 2)]
-      nextEvent = randomResponse2
+      return randomResponse2
     } else if ((emote1level === emote2level === emote3level) && (emote1level > 0)) {
       var nextevent12or3 = [
         nextEvent1,
@@ -364,9 +371,9 @@ client.on('message', message => {
         nextEvent3
       ]
       var randomResponse3 = nextevent12or3[Math.floor(Math.random() * 3)]
-      nextEvent = randomResponse3
+      return randomResponse3
     } else if ((emote1level === emote2level === emote3level) && (emote1level === 0)) {
-      nextEvent = 1337
+      return 1337
     }
   }
 })
