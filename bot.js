@@ -56,7 +56,7 @@ client.on('message', message => {
     message.member.setNickname('PAVLOV')
   }
   if (message.content.toLowerCase().includes('pavlov')) {
-    message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ping me, tell me what I am.')
+    message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ding.')
   }
   if (message.content.toLowerCase().includes('you are a computer')) {
     message.channel.send('Ah.')
