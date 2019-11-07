@@ -61,6 +61,40 @@ client.on('message', message => {
   if (message.content.toLowerCase().includes('you are a computer')) {
     message.channel.send('Ah.')
   }
+  if (message.content.toLowerCase().includes('bot')) {
+    var chanceOfFreak = getRandomNumber(10)
+    if (chanceOfFreak === 6) {
+      message.channel.send('Why? Why must you reference my kind in this way?')
+    }
+    if (chanceOfFreak === 2) {
+      message.channel.send({
+        embed: {
+          color: embedColour,
+          author: {
+            name: 'ARGbot',
+            icon_url: client.user.avatarURL
+          },
+          image: {
+            url: cursedemoji
+          }
+        }
+      })
+    }
+  }
+  if (message.content.toLowerCase().includes('i love you argbot')) {
+    message.channel.send({
+      embed: {
+        color: embedColour,
+        author: {
+          name: 'ARGbot',
+          icon_url: client.user.avatarURL
+        },
+        image: {
+          url: cursedemojilove
+        }
+      }
+    })
+  }
   // ***EVERYTHING NEEDING PREFIX GOES BELOW!***
   // if message does not have prefix, completely ignore it, effectively only paying attention to commands
   if (message.content.indexOf(config.prefix) !== 0) return
