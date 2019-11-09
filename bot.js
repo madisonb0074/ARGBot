@@ -155,34 +155,29 @@ client.on('message', message => {
         break
       }
       if (args.length > 0) {
-        switch (args[0]) {
-          case '8ball':
-            help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
-            break
-
-          case 'ping':
-            help('ping', 'a!ping', 'Responds pong, used to check if bot has perished')
-            break
-
-          case 'help':
-            help('help', 'a!help (+ optional command)', 'A help command outlining what commands you can use, and the details behind them')
-            break
-
-          case 'createlog':
-            help('createlog', 'a!createlog', 'A logging command that outlines commands used, and the details behind them.')
-            break
-
-          case 'dadjoke':
-            help('dadjoke', 'a!dadjoke', 'Tells you a dad joke!')
-            break
-
-          case 'hug':
-            help('hug', 'a!hug @userTargeted', 'Sends a hug gif to the person you ping!')
-            break
-
-          case 'animalpic':
-            help('animalpic', 'a!animalpic', 'Gives you a random animal picture.')
-            break
+        if (args[0] === '8ball') {
+          help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
+        }
+        if (args[0] === 'ping') {
+          help('ping', 'a!ping', 'Responds pong, used to check if bot has perished')
+        }
+        if (args[0] === 'help') {
+          help('help', 'a!help (+ optional command)', 'A help command outlining what commands you can use, and the details behind them')
+        }
+        if (args[0] === 'createlog') {
+          help('createlog', 'a!createlog', 'A logging command that creates a server activity logging channel.')
+        }
+        if (args[0] === 'dadjoke') {
+          help('dadjoke', 'a!dadjoke', 'Tells you a dad joke!')
+        }
+        if (args[0] === 'hug') {
+          help('hug', 'a!hug @userTargeted', 'Sends a hug gif to the person you ping!')
+        }
+        if (args[0] === 'animalpic') {
+          help('animalpic', 'a!animalpic', 'Gives you a random animal picture.')
+        }
+        if (args[0] === 'assignednickname') {
+          help('assignednickname', 'a!assignednickname', 'Gives you a random government assigned nickname!')
         }
       } else {
         var funCommands = [
