@@ -54,7 +54,7 @@ client.on('message', message => {
   if (message.content.toLowerCase().includes('since')) {
     // set botname to pavlovs dog by finding bot ID and changing the nickname
     message.guild.members.get(client.user.id).setNickname('PAVLOV\'S DOG')
-    message.member.setNickname('PAVLOV').catch(err => console.log(err))
+    message.member.setNickname('PAVLOV')
   }
   if (message.content.toLowerCase().includes('pavlov')) {
     message.channel.send('Relevant in the age of beast and man, but does his classic conditioning not extend to us, as well? Signal and response. Ding.')
@@ -318,7 +318,7 @@ client.on('message', message => {
         var cursedNickResponses = cursedNicknames.split('\n')
         var randomCursedNickname = cursedNickResponses[Math.floor(Math.random() * cursedNickResponses.length)]
         message.channel.send('Y͇͙̜ọ͙͎̹̯͙ur̦ ̩̜͈̮̗g̜̜̻͉̣͉̞o̳̩̞̘̙v̦e̗̮͇̖̞͇r̩̞̮̹̪̯n̪̪͓m̫̲̩͇ͅe̮̖̹͈͈n̥̹̟̙̳̪ͅt̪̱̦̬͖̰̟ ̰̬̙͍a̭͓̝̭̙̖̱s̯̩̙̗͎ṣ̖͇ig̜̮̭̫̱̮͓n̠̠̠̻̱̯̦ḙ̭̱̼̩̤ͅd̩ ̠̳͕̹͚ni̟͖̼͙c̤͓̟̰k̮͈̪͔͉͚n͚̦̲͚̙̞͉a͓̙m̱̪͕e ̪̼̬͍̮̲̝i͈͇̱̙̪̞ͅs̙̲:̰̭̯͖̫̮ͅ ' + randomCursedNickname)
-        message.member.setNickname(randomCursedNickname).catch(err => console.log(err))
+        message.member.setNickname(randomCursedNickname)
       }
   }
   // help template that fills in info when function is used
