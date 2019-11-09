@@ -36,6 +36,7 @@ client.on('ready', () => {
   // this number within the client.channels.get is the ARGTEST server bot-log channel ID specifically
   var channel = client.channels.get('581154704785014784')
   channel.send('I am online, ready to create chaos.')
+  client.user.setGame('Use a!help')
 
   // shows that the bot is online, and what command to use in the bot appearance within servers
   // client.user.setGame('use a!help')
@@ -154,23 +155,34 @@ client.on('message', message => {
         break
       }
       if (args.length > 0) {
-        if (args[0] === '8ball') {
-          help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
-        }
-        if (args[0] === 'ping') {
-          help('ping', 'a!ping', 'Responds pong, used to check if bot has perished')
-        }
-        if (args[0] === 'help') {
-          help('help', 'a!help (+ optional command)', 'A help command outlining what commands you can use, and the details behind them')
-        }
-        if (args[0] === 'createlog') {
-          help('createlog', 'a!createlog', 'A logging command that outlines commands used, and the details behind them.')
-        }
-        if (args[0] === 'dadjoke') {
-          help('dadjoke', 'a!dadjoke', 'Tells you a dad joke!')
-        }
-        if (args[0] === 'hug') {
-          help('hug', 'a!hug @userTargeted', 'Sends a hug gif to the person you ping!')
+        switch (args[0]) {
+          case '8ball':
+            help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
+            break
+
+          case 'ping':
+            help('ping', 'a!ping', 'Responds pong, used to check if bot has perished')
+            break
+
+          case 'help':
+            help('help', 'a!help (+ optional command)', 'A help command outlining what commands you can use, and the details behind them')
+            break
+
+          case 'createlog':
+            help('createlog', 'a!createlog', 'A logging command that outlines commands used, and the details behind them.')
+            break
+
+          case 'dadjoke':
+            help('dadjoke', 'a!dadjoke', 'Tells you a dad joke!')
+            break
+
+          case 'hug':
+            help('hug', 'a!hug @userTargeted', 'Sends a hug gif to the person you ping!')
+            break
+
+          case 'animalpic':
+            help('animalpic', 'a!animalpic', 'Gives you a random animal picture.')
+            break
         }
       } else {
         var funCommands = [
@@ -178,7 +190,9 @@ client.on('message', message => {
           'ping',
           'dadjoke',
           'hug',
-          'animalpic'
+          'animalpic',
+          'assignednickname',
+          'pet'
         ]
 
         var functionalCommands = [
@@ -295,9 +309,24 @@ client.on('message', message => {
       break
     // assigns user a random nickname, but glitches out sometimes
     case 'assignednickname':
-      var possibilityOfGlitch = getRandomNumber(10)
-      
+      checkPavlov()
+      var possibilityOfGlitch = getRandomNumber(6)
+      if (possibilityOfGlitch !== 5) {
+        // normal nicknames! just assigns a name, does not change user nickname
+        var rawNicknames = fs.readFileSync('./nicknames.txt').toString('utf-8')
+        var nicknameResponses = rawNicknames.split('\n')
+        var randomNickname = nicknameResponses[Math.floor(Math.random() * nicknameResponses.length)]
+        message.channel.send('Your government assigned nickname is: ' + randomNickname)
+      } else {
+        // cursed nicknames!
+        var cursedNicknames = fs.readFileSync('./cursednicknames.txt').toString('utf-8')
+        var cursedNickResponses = cursedNicknames.split('\n')
+        var randomCursedNickname = cursedNickResponses[Math.floor(Math.random() * cursedNickResponses.length)]
+        message.channel.send('Y͇͙̜ọ͙͎̹̯͙ur̦ ̩̜͈̮̗g̜̜̻͉̣͉̞o̳̩̞̘̙v̦e̗̮͇̖̞͇r̩̞̮̹̪̯n̪̪͓m̫̲̩͇ͅe̮̖̹͈͈n̥̹̟̙̳̪ͅt̪̱̦̬͖̰̟ ̰̬̙͍a̭͓̝̭̙̖̱s̯̩̙̗͎ṣ̖͇ig̜̮̭̫̱̮͓n̠̠̠̻̱̯̦ḙ̭̱̼̩̤ͅd̩ ̠̳͕̹͚ni̟͖̼͙c̤͓̟̰k̮͈̪͔͉͚n͚̦̲͚̙̞͉a͓̙m̱̪͕e ̪̼̬͍̮̲̝i͈͇̱̙̪̞ͅs̙̲:̰̭̯͖̫̮ͅ ' + randomCursedNickname)
+        message.member.setNickname(randomCursedNickname)
+      }
   }
+  // help template that fills in info when function is used
   function help (title, usage, description) {
     checkPavlov()
     message.channel.send({
