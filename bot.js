@@ -36,7 +36,7 @@ client.on('ready', () => {
   // this number within the client.channels.get is the ARGTEST server bot-log channel ID specifically
   var channel = client.channels.get('581154704785014784')
   channel.send('I am online, ready to create chaos.')
-  client.user.setPresence({ game: { name: 'nameGoesHere', type: 0 } })
+  client.user.setPresence({ game: { name: 'Use a!help', type: 0 } })
 
   // shows that the bot is online, and what command to use in the bot appearance within servers
   // client.user.setGame('use a!help')
