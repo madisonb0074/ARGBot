@@ -64,9 +64,12 @@ client.on('message', message => {
   if (message.content.toLowerCase().includes('bot')) {
     var chanceOfFreak = getRandomNumber(10)
     if (chanceOfFreak === 6) {
-      message.channel.send('Why? Why must you reference my kind in this way?')
+      message.channel.send('Why? Why must you reference me in this way?')
     }
     if (chanceOfFreak === 2) {
+      var rawCursed = fs.readFileSync('./cursedemoji.txt').toString('utf-8')
+      var cursedResponses = rawCursed.split('\n')
+      var randomCursed = cursedResponses[Math.floor(Math.random() * cursedResponses.length)]
       message.channel.send({
         embed: {
           color: embedColour,
@@ -75,13 +78,16 @@ client.on('message', message => {
             icon_url: client.user.avatarURL
           },
           image: {
-            url: cursedemoji
+            url: randomCursed
           }
         }
       })
     }
   }
   if (message.content.toLowerCase().includes('i love you argbot')) {
+    var rawLove = fs.readFileSync('./cursedlove.txt').toString('utf-8')
+    var loveResponses = rawLove.split('\n')
+    var randomLove = loveResponses[Math.floor(Math.random() * loveResponses.length)]
     message.channel.send({
       embed: {
         color: embedColour,
@@ -90,7 +96,7 @@ client.on('message', message => {
           icon_url: client.user.avatarURL
         },
         image: {
-          url: cursedemojilove
+          url: randomLove
         }
       }
     })
@@ -287,6 +293,10 @@ client.on('message', message => {
       }
 
       break
+    // assigns user a random nickname, but glitches out sometimes
+    case 'assignednickname':
+      var possibilityOfGlitch = getRandomNumber(10)
+      
   }
   function help (title, usage, description) {
     checkPavlov()
