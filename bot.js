@@ -381,7 +381,7 @@ client.on('message', message => {
       rollDice(100)
       break
     case 'coinflip':
-      var flip = getRandomNumber(1) + 1
+      var flip = getRandomNumber(2)
       if (flip === 1) {
         message.channel.send('Heads!')
       } else if (flip === 2) {
