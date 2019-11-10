@@ -237,7 +237,7 @@ client.on('message', message => {
               icon_url: client.user.avatarURL
             },
             title: 'Accurate Rationalization Gadget Bot Help',
-            description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them.',
+            description: 'This is a collection of all commands, use a!your_command (replacing your_command with the command) to use them. Use a!help your_command in order to find out more about the command.',
             fields: [{
               name: 'Fun commands',
               value: listElements(funCommands)
