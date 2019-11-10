@@ -154,6 +154,7 @@ client.on('message', message => {
         message.channel.send('I̟ͯ̒̐ ̓̈́ͫͫ̽ͧͨ҉r̯̗͖͕ͣ̈́̊̍̚e̐͞f̧͈̻̍̓̇̑̋ǘ̠̩͍̺͔̑ͦ͢s͙̰̍ͩë̟̖́́.͈͎͈̳͉')
         break
       }
+      // outlines arguments after help command
       if (args.length > 0) {
         if (args[0] === '8ball') {
           help('8ball', 'a!8ball + yes/no question', 'An 8ball bot used to answer simple yes/no questions.')
@@ -179,6 +180,27 @@ client.on('message', message => {
         if (args[0] === 'assignednickname') {
           help('assignednickname', 'a!assignednickname', 'Gives you a random government assigned nickname!')
         }
+        if (args[0] === 'd4') {
+          help('d4', 'a!d4', 'Rolls a 4-sided dice.')
+        }
+        if (args[0] === 'd6') {
+          help('d6', 'a!d6', 'Rolls a 6-sided dice.')
+        }
+        if (args[0] === 'd8') {
+          help('d8', 'a!d8', 'Rolls an 8-sided dice.')
+        }
+        if (args[0] === 'd10') {
+          help('d10', 'a!d10', 'Rolls a 10-sided dice.')
+        }
+        if (args[0] === 'd12') {
+          help('d12', 'a!d12', 'Rolls a 12-sided dice.')
+        }
+        if (args[0] === 'd20') {
+          help('d20', 'a!d20', 'Rolls a 20-sided dice.')
+        }
+        if (args[0] === 'coinflip') {
+          help('coinflip', 'a!coinflip', 'Flips a coin.')
+        }
       } else {
         var funCommands = [
           '8ball',
@@ -193,6 +215,17 @@ client.on('message', message => {
         var functionalCommands = [
           'createlog',
           'help'
+        ]
+
+        var diceCommands = [
+          'd4',
+          'd6',
+          'd8',
+          'd10',
+          'd12',
+          'd20',
+          'd100',
+          'coinflip'
         ]
 
         // main help function occurring if there are no extra arguments
@@ -212,6 +245,10 @@ client.on('message', message => {
             {
               name: 'Functional commands',
               value: listElements(functionalCommands)
+            },
+            {
+              name: 'Fun commands',
+              value: listElements(diceCommands)
             }
             ],
             timestamp: new Date(),
@@ -320,6 +357,37 @@ client.on('message', message => {
         message.channel.send('Y͇͙̜ọ͙͎̹̯͙ur̦ ̩̜͈̮̗g̜̜̻͉̣͉̞o̳̩̞̘̙v̦e̗̮͇̖̞͇r̩̞̮̹̪̯n̪̪͓m̫̲̩͇ͅe̮̖̹͈͈n̥̹̟̙̳̪ͅt̪̱̦̬͖̰̟ ̰̬̙͍a̭͓̝̭̙̖̱s̯̩̙̗͎ṣ̖͇ig̜̮̭̫̱̮͓n̠̠̠̻̱̯̦ḙ̭̱̼̩̤ͅd̩ ̠̳͕̹͚ni̟͖̼͙c̤͓̟̰k̮͈̪͔͉͚n͚̦̲͚̙̞͉a͓̙m̱̪͕e ̪̼̬͍̮̲̝i͈͇̱̙̪̞ͅs̙̲:̰̭̯͖̫̮ͅ ' + randomCursedNickname)
         message.member.setNickname(randomCursedNickname)
       }
+      break
+      // dice rolling functions
+    case 'd4':
+      rollDice(4)
+      break
+    case 'd6':
+      rollDice(6)
+      break
+    case 'd8':
+      rollDice(8)
+      break
+    case 'd10':
+      rollDice(10)
+      break
+    case 'd12':
+      rollDice(12)
+      break
+    case 'd20':
+      rollDice(20)
+      break
+    case 'd100':
+      rollDice(100)
+      break
+    case 'coinflip':
+      var flip = getRandomNumber(1) + 1
+      if (flip === 1) {
+        message.channel.send('Heads!')
+      } else if (flip === 2) {
+        message.channel.send('Tails!')
+      }
+      break
   }
   // help template that fills in info when function is used
   function help (title, usage, description) {
@@ -443,6 +511,11 @@ client.on('message', message => {
     } else if ((emote1level === emote2level === emote3level) && (emote1level === 0)) {
       return 1337
     }
+  }
+  // rolls a dice with this number and sends it
+  function rollDice (diceNumber) {
+    var roll = getRandomNumber(diceNumber) + 1
+    message.channel.send(roll)
   }
 })
 
