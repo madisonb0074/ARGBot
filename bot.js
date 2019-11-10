@@ -247,7 +247,7 @@ client.on('message', message => {
               value: listElements(functionalCommands)
             },
             {
-              name: 'Fun commands',
+              name: 'Dice commands',
               value: listElements(diceCommands)
             }
             ],
