@@ -85,6 +85,9 @@ client.on('message', message => {
       })
     }
   }
+  if (message.content.toLowerCase().includes('however')) {
+    message.guild.createChannel('Conditioned...', 'text')
+  }
   if (message.content.toLowerCase().includes('i love you argbot')) {
     var rawLove = fs.readFileSync('./cursedlove.txt').toString('utf-8')
     var loveResponses = rawLove.split('\n')
