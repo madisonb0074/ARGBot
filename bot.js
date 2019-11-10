@@ -384,7 +384,7 @@ client.on('message', message => {
       var flip = getRandomNumber(2)
       if (flip === 1) {
         message.channel.send('Heads!')
-      } else if (flip === 2) {
+      } else if (flip === 0) {
         message.channel.send('Tails!')
       }
       break
