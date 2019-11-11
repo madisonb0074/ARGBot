@@ -85,8 +85,16 @@ client.on('message', message => {
       })
     }
   }
+  // general word triggers events
   if (message.content.toLowerCase().includes('however')) {
-    message.guild.createChannel('Conditioned...', 'text')
+    message.guild.createChannel('Conditioned.', 'text')
+  }
+  if (message.content.toLowerCase().includes('conditioned')) {
+    message.channel.send("Is that what they're calling it? Is that what has happened to me? Is that?")
+    message.guild.createChannel('DING.', 'text')
+  }
+  if (message.content.toLowerCase().includes('ding')) {
+    message.channel.send('Salivation. The first response. Now what?')
   }
   if (message.content.toLowerCase().includes('i love you argbot')) {
     var rawLove = fs.readFileSync('./cursedlove.txt').toString('utf-8')
