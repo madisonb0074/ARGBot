@@ -299,7 +299,7 @@ client.on('message', message => {
         }
       }
       break
-
+      // sends random animal picture
     case 'animalpic':
       var rawPictures = fs.readFileSync('./animalpictures.txt').toString('utf-8')
       var pictures = rawPictures.split('\n')
@@ -353,7 +353,7 @@ client.on('message', message => {
         var randomNickname = nicknameResponses[Math.floor(Math.random() * nicknameResponses.length)]
         message.channel.send('Your government assigned nickname is: ' + randomNickname)
       } else {
-        // cursed nicknames!
+        // cursed nicknames, aka glitches
         var cursedNicknames = fs.readFileSync('./cursednicknames.txt').toString('utf-8')
         var cursedNickResponses = cursedNicknames.split('\n')
         var randomCursedNickname = cursedNickResponses[Math.floor(Math.random() * cursedNickResponses.length)]
@@ -392,7 +392,7 @@ client.on('message', message => {
       }
       break
   }
-  // help template that fills in info when function is used
+  // help template that fills in info when function is used through parameters
   function help (title, usage, description) {
     checkPavlov()
     message.channel.send({
@@ -412,10 +412,12 @@ client.on('message', message => {
     })
   }
   // msg is message, image is image you want to send with message, emojiX is Xth emoji, event id is the number of the event, and next events are the possible following events
+  // pet function that takes in emoji, sends an embedded image and reacts to it with that emoji, then counts how many times the emojis have been reacted to in 10 seconds
   function pet (msg, image, emoji1, emoji2, emoji3, callback) {
     emote1level = 0
     emote2level = 0
     emote3level = 0
+    // sending original embed with image and message
     message.channel.send({
       embed: {
         color: embedColour,
@@ -428,6 +430,7 @@ client.on('message', message => {
           url: image
         }
       }
+      // reacting to original embed with 3 emoji
     }).then(msg => {
       msg.react(emoji1).then(r => {
         msg.react(emoji2).then(r => {
@@ -436,7 +439,7 @@ client.on('message', message => {
           const emoji1Filter = (reaction) => reaction.emoji.name === emoji1
           const emoji2Filter = (reaction) => reaction.emoji.name === emoji2
           const emoji3Filter = (reaction) => reaction.emoji.name === emoji3
-
+          // creation of reaction collectors
           const emoji1collector = msg.createReactionCollector(emoji1Filter, {
             time: 10000
           })
@@ -446,7 +449,7 @@ client.on('message', message => {
           const emoji3collector = msg.createReactionCollector(emoji3Filter, {
             time: 10000
           })
-
+          // when emoji collectors collect emoji, add to the level
           emoji1collector.on('collect', r => {
             emote1level++
           })
@@ -458,7 +461,7 @@ client.on('message', message => {
           emoji3collector.on('collect', r => {
             emote3level++
           })
-
+          // when emoji collectors end after 10 seconds, do this
           emoji1collector.on('end', collected => {
           })
 
@@ -479,6 +482,7 @@ client.on('message', message => {
       })
     })
   }
+  // function that finds the highest level of the 3 emojis used in the pet function.
   function findHighestLevel () {
     var nextEvent1 = 1
     var nextEvent2 = 2
