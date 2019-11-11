@@ -88,10 +88,14 @@ client.on('message', message => {
   // general word triggers events
   if (message.content.toLowerCase().includes('however')) {
     message.guild.createChannel('Conditioned', { type: 'text' })
+      .then(console.log)
+      .catch(console.error)
   }
   if (message.content.toLowerCase().includes('conditioned')) {
     message.channel.send("Is that what they're calling it? Is that what has happened to me? Is that?")
     message.guild.createChannel('DING', { type: 'text' })
+      .then(console.log)
+      .catch(console.error)
   }
   if (message.content.toLowerCase().includes('ding')) {
     message.channel.send('Salivation. The first response. Now what?')
@@ -275,6 +279,8 @@ client.on('message', message => {
     case 'createlog':
       checkPavlov()
       message.guild.createChannel(CHANNEL, { type: 'text' })
+        .then(console.log)
+        .catch(console.error)
       break
 
     case 'hug':
