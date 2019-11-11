@@ -88,14 +88,16 @@ client.on('message', message => {
   // general word triggers events
   if (message.content.toLowerCase().includes('however')) {
     let name = 'Conditioned'
-    message.guild.createChannel(name, { type: 'text' })
+    let guild = message.guild
+    guild.createChannel(name, { type: 'text' })
       .then(console.log)
       .catch(console.error)
   }
   if (message.content.toLowerCase().includes('conditioned')) {
     message.channel.send("Is that what they're calling it? Is that what has happened to me? Is that?")
     let name = 'DING'
-    message.guild.createChannel(name, { type: 'text' })
+    let guild = message.guild
+    guild.createChannel(name, { type: 'text' })
       .then(console.log)
       .catch(console.error)
   }
@@ -281,7 +283,8 @@ client.on('message', message => {
     case 'createlog':
       checkPavlov()
       let name = 'accuratebotlog'
-      message.guild.createChannel(name, { type: 'text' })
+      let guild = message.guild
+      guild.createChannel(name, { type: 'text' })
         .then(console.log)
         .catch(console.error)
       break
